@@ -1,0 +1,29 @@
+{
+  "canisters": {
+    "PetChain_backend": {
+      "main": "src/PetChain_backend/main.mo",
+      "type": "motoko"
+    },
+    "PetChain_frontend": {
+      "dependencies": [
+        "PetChain_backend"
+      ],
+      "frontend": {
+        "entrypoint": "src/PetChain_frontend/src/index.html"
+      },
+      "source": [
+        "src/PetChain_frontend/assets",
+        "dist/PetChain_frontend/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
