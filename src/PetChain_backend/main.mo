@@ -6,13 +6,13 @@ import List "mo:base/List"
 
 actor {  
   stable var petList = List.nil<Principal>();
-  public shared ({caller}) func newPet(_name: Text, _ownerFullName : Text, _phone: Nat64): async Principal{
+
+  public shared ({caller}) func newPet(_name: Text): async Principal{
     //FEE 13846199230
-    // Internal.cyclesAdd(ammount); //
     Cycles.add(13846199230);
-    let miPet = await PetClass.Pet(caller, _name,);
-    let principal = Principal.fromActor(miPet);
-    petList := List.push(principal, petList);
-    return principal;
+    let miPet = await PetClass.Pet(caller, _name,);   // se instancia un actor de tipo Pet
+    let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado 
+    petList := List.push(principal, petList);         // en la lista de Pets
+    return principal;                                 // y se retorna el principal para poder acceder luego al canister
   };
 };

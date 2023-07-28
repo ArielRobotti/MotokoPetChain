@@ -3,7 +3,7 @@ import Principal "mo:base/Principal";
 import Array "mo:base/Array";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
-import Text "mo:base/Text";
+import Nat "mo:base/Nat";
 
 shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
     stable var name = _name;
@@ -36,12 +36,11 @@ shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
         if (isAdmin(caller) or caller == owner) {
             return ["Nombre: " # name,
                     "Amo: " # ownerFullName,
-                    "Phone: " # Text.fromNat(ownerPhone),
-                    "Email" # eMail];
+                    "Phone: " # Nat.toText(ownerPhone),
+                    "Email: " # eMail];
         };
         return [];
     };
-
     public shared({caller}) func setName(_newName: Text):async Text{
         if(caller == owner){
             if (_newName != "" ){
@@ -54,7 +53,6 @@ shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
         };
         return "El nombre no fue modificado";
     };
-
     public shared({caller}) func setOwnerFullName(_newName: Text):async Text{
         if(caller == owner){
             if(_newName != "" ){
@@ -67,7 +65,29 @@ shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
         };
         return "Acceso denegado";
     };
-
-
+    public shared({caller}) func setOwnerPhone(_newPhone: Nat):async Text{
+        if(caller == owner){
+            if(_newPhone > 100000 ){
+                ownerPhone := _newPhone;
+                return "Telefono de contacto actualizado"; 
+            }
+            else{
+                return "El numero no es valido";
+            };       
+        };
+        return "Acceso denegado";
+    };
+    public shared({caller}) func setEmail(_newEmail: Text):async Text{
+        if(caller == owner){
+            if(_newEmail != ""){
+                eMail := _newEmail;
+                return "Email actualizado"; 
+            }
+            else{
+                return "El formato no es valido";
+            };       
+        };
+        return "Acceso denegado";
+    };
 
 };
