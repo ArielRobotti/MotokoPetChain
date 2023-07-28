@@ -10,7 +10,7 @@ actor {
     //FEE 13846199230
     // Internal.cyclesAdd(ammount); //
     Cycles.add(13846199230);
-    let miPet = await PetClass.Pet(caller, _name, _ownerFullName, _phone);
+    let miPet = await PetClass.Pet(caller, _name,);
     let principal = Principal.fromActor(miPet);
     petList := List.push(principal, petList);
     return principal;
