@@ -7,13 +7,13 @@ import Nat "mo:base/Nat";
 
 shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
     stable var name = _name;
-    stable let owner: Principal = _owner;
+    stable let owner: Principal = _owner; // el Owner tiene exclusividad para acceder a los setters
     stable var ownerFullName = "";
     stable var ownerPhone = 0;
     stable var eMail : Text = "";
+    
+    //Los admin podran ingresar datos relacionados con los episodios clinicos de las mascotas
     stable var adminList = List.fromArray<Principal>([caller]);
-
-
     func isAdmin(p : Principal) : (Bool) {
         let auth = List.find<Principal>(adminList, func(n) { n == caller });
         return switch auth {
@@ -24,7 +24,7 @@ shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
 
     public shared ({ caller }) func addAdminToList(_newAdmin : Principal) : async (Text) {
 
-        if (not isAdmin(caller) and caller != owner) { return "unauthorized caller" };
+        if (caller != owner) { return "unauthorized caller" };
         if (not isAdmin(_newAdmin)) {
             adminList := List.push(_newAdmin, adminList); //que feo
             return "administrator entered successfully";
@@ -49,15 +49,15 @@ shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
             }
             else{
                  return "El nombre no puede estar vacío";
-            }      
+            };     
         };
-        return "El nombre no fue modificado";
+        return "Acceso denegado";
     };
     public shared({caller}) func setOwnerFullName(_newName: Text):async Text{
         if(caller == owner){
             if(_newName != "" ){
                 ownerFullName := _newName;
-                return "Nombre del dueño actualizado a: " # name; 
+                return "Nombre del dueño actualizado a: " # ownerFullName; 
             }
             else{
                 return "El nombre no puede estar vacío";

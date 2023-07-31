@@ -4,6 +4,10 @@
       "main": "src/PetChain_backend/main.mo",
       "type": "motoko"
     },
+    "Pruebas":{
+      "main": "src/PetChain_backend/pruebas.mo",
+      "type": "motoko"
+    },
     "PetChain_frontend": {
       "dependencies": [
         "PetChain_backend"

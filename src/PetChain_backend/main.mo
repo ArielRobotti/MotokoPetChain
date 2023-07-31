@@ -15,4 +15,6 @@ actor {
     petList := List.push(principal, petList);         // en la lista de Pets
     return principal;                                 // y se retorna el principal para poder acceder luego al canister
   };
+
+  public query func getMiPets(): async [Principal]{List.toArray<Principal>(petList)}
 };
