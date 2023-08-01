@@ -4,90 +4,132 @@ import Array "mo:base/Array";
 import Iter "mo:base/Iter";
 import List "mo:base/List";
 import Nat "mo:base/Nat";
+import Text "mo:base/Text";
 
-shared ({ caller }) actor class Pet(_owner: Principal, _name: Text) {
+
+shared ({ caller }) actor class Pet(_owner: Principal, 
+                                    _name: Text,
+                                    _especie : Text,
+                                    _raza : Text,
+                                    _fechaNacimiento : Text,
+                                    _ownerName : Text,
+                                    _ownerPhone : Nat,
+                                    _ownerEmail : Text) {
+    stable let owner : Principal = _owner; // el Owner tiene exclusividad para acceder a los setters
     stable var name = _name;
-    stable let owner: Principal = _owner; // el Owner tiene exclusividad para acceder a los setters
-    stable var ownerFullName = "";
-    stable var ownerPhone = 0;
-    stable var eMail : Text = "";
+    stable var especie = _especie; //estos campos suelen no ser variables pero pueden ser cargados con errores
+    stable var raza = _raza;
+    stable var naciminento = _fechaNacimiento;
+    stable var ownerName = _ownerName;
+    stable var ownerPhone = _ownerPhone;
+    stable var eMail : Text = _ownerEmail;
+    stable var eventosDiarios = List.nil<Text>();
+    stable var eventosClinicos = List.nil<Text>();
     
     //Los admin podran ingresar datos relacionados con los episodios clinicos de las mascotas
-    stable var adminList = List.fromArray<Principal>([caller]);
-    func isAdmin(p : Principal) : (Bool) {
-        let auth = List.find<Principal>(adminList, func(n) { n == caller });
-        return switch auth {
-            case null { false };
-            case _ { true };
+    // stable var adminList = List.fromArray<Principal>([caller]);
+    // func isAdmin(p : Principal) : (Bool) {
+    //     let auth = List.find<Principal>(adminList, func(n) { n == caller });
+    //     return switch auth {
+    //         case null { false };
+    //         case _ { true };
+    //     };
+    // };
+
+    // public shared ({ caller }) func addAdminToList(_newAdmin : Principal) : async (Text) {
+
+    //     if (caller != owner) { return "unauthorized caller" };
+    //     if (not isAdmin(_newAdmin)) {
+    //         adminList := List.push(_newAdmin, adminList); //que feo
+    //         return "administrator entered successfully";
+    //     };
+    //     return "The administrator was already in the database";
+    // };
+    stable var adminArray = [caller];
+
+    func isAdmin(p: Principal): Bool{
+        for(admin in adminArray.vals()){
+            if(p == admin){ return true};
         };
+        return false;
     };
 
-    public shared ({ caller }) func addAdminToList(_newAdmin : Principal) : async (Text) {
-
+    public shared ({caller}) func addAdminToList(_newAdmin: Text):async Text{
         if (caller != owner) { return "unauthorized caller" };
-        if (not isAdmin(_newAdmin)) {
-            adminList := List.push(_newAdmin, adminList); //que feo
+        let newAdmin = Principal.fromText(_newAdmin);
+        if (not isAdmin(newAdmin)){
+            var tempBuffer = Buffer.fromArray<Principal>(adminArray);
+            tempBuffer.add(newAdmin);
+            adminArray := Buffer.toArray(tempBuffer);
             return "administrator entered successfully";
         };
         return "The administrator was already in the database";
     };
 
+     // ------ Setters -------
+    public shared ({ caller }) func setName(_newName : Text) : async Bool {
+        if (caller == owner and _newName != "") {
+            name := _newName;
+            return true;
+        };
+        return false;
+    };
+
+    public shared ({ caller }) func setOwnerName(_newName : Text) : async Bool {
+        if (caller == owner and _newName != "") {
+            ownerName := _newName;
+            return true;
+        };
+        return false;
+    };
+    public shared ({ caller }) func setOwnerPhone(_newPhone : Nat) : async Bool {
+        if (caller == owner and _newPhone > 100000) {
+            ownerPhone := _newPhone;
+            return true;
+        };
+        return false;
+    };
+    public shared ({ caller }) func setEmail(_newEmail : Text) : async Bool {
+        if (caller == owner and Text.contains(_newEmail, #char '@')) {
+            eMail := _newEmail;
+            return true;
+        };
+        return false;
+    };
+
+    // ------ Getters -------
     public shared query ({ caller }) func getInfo() : async [Text] {
         if (isAdmin(caller) or caller == owner) {
-            return ["Nombre: " # name,
-                    "Amo: " # ownerFullName,
-                    "Phone: " # Nat.toText(ownerPhone),
-                    "Email: " # eMail];
+            return [
+                "Nombre: " # name,
+                "Cliente: " # ownerName,
+                "Phone: " # Nat.toText(ownerPhone),
+                "Email: " # eMail,
+            ];
         };
         return [];
     };
-    public shared({caller}) func setName(_newName: Text):async Text{
-        if(caller == owner){
-            if (_newName != "" ){
-                name := _newName;
-                return "El nuevo nombre es: " # name; 
-            }
-            else{
-                 return "El nombre no puede estar vacío";
-            };     
-        };
-        return "Acceso denegado";
+    public shared query ({ caller }) func getOwner(): async Text {
+        if (isAdmin(caller) or caller == owner) { return Principal.toText(owner)};
+        return "";
     };
-    public shared({caller}) func setOwnerFullName(_newName: Text):async Text{
-        if(caller == owner){
-            if(_newName != "" ){
-                ownerFullName := _newName;
-                return "Nombre del dueño actualizado a: " # ownerFullName; 
-            }
-            else{
-                return "El nombre no puede estar vacío";
-            };       
-        };
-        return "Acceso denegado";
+    public shared query ({ caller }) func getName(): async Text {
+        if (isAdmin(caller) or caller == owner) { return name };
+        return "";
     };
-    public shared({caller}) func setOwnerPhone(_newPhone: Nat):async Text{
-        if(caller == owner){
-            if(_newPhone > 100000 ){
-                ownerPhone := _newPhone;
-                return "Telefono de contacto actualizado"; 
-            }
-            else{
-                return "El numero no es valido";
-            };       
-        };
-        return "Acceso denegado";
+    public shared query ({ caller }) func getOwnerName(): async Text {
+        if (isAdmin(caller) or caller == owner) { return ownerName };
+        return "";
     };
-    public shared({caller}) func setEmail(_newEmail: Text):async Text{
-        if(caller == owner){
-            if(_newEmail != ""){
-                eMail := _newEmail;
-                return "Email actualizado"; 
-            }
-            else{
-                return "El formato no es valido";
-            };       
-        };
-        return "Acceso denegado";
+    public shared query ({ caller }) func getOwnerPhone(): async Nat {
+        if (isAdmin(caller) or caller == owner) {return ownerPhone };
+        return 0;
     };
+    public shared query ({ caller }) func getEmail(): async Text {
+        if (isAdmin(caller) or caller == owner) {return eMail};
+        return "";
+    };
+    
+
 
 };
