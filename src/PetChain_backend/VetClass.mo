@@ -27,13 +27,12 @@ shared ({ caller }) actor class Vet(
         return principal; // y se retorna el principal para poder acceder luego al canister
     };
 
-    // ----------------------------------------------------------------------------------
-    // Provisorio... se planea convertir este actor en un actor class instanciable desde un canister superior en el que
-    // habra una lista de veterinarios acreditados, mediante la que se podrá confirmar si un Principal corresponde a un Vet
-    public shared func isVet() : async Bool { true };
-    // ----------------------------------------------------------------------------------
-
     public query func getMiPets() : async [Principal] {
         List.toArray<Principal>(petList);
     };
+    public shared ({caller}) func getInfoFromPet (petPrincipal: Text):async [Text]{
+        if(caller != owner){return []};
+        let remotePet = actor(petPrincipal): actor {getInfo: shared () -> async [Text]}; //creo una referencia al supuesto canister Vet
+        await remotePet.getInfo();
+    }
 };
