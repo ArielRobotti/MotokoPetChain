@@ -7,7 +7,8 @@ import Nat "mo:base/Nat";
 import Text "mo:base/Text";
 
 
-shared ({ caller }) actor class Pet(_owner: Principal, 
+shared ({ caller }) actor class Pet(_rootPrincipal: Principal,
+                                    _owner: Principal, 
                                     _name: Text,
                                     _especie : Text,
                                     _raza : Text,
@@ -15,11 +16,12 @@ shared ({ caller }) actor class Pet(_owner: Principal,
                                     _ownerName : Text,
                                     _ownerPhone : Nat,
                                     _ownerEmail : Text) {
+    stable let rootPrincipal = _rootPrincipal; 
     stable let owner : Principal = _owner; // el Owner tiene exclusividad para acceder a los setters
     stable var name = _name;
-    stable var especie = _especie; //estos campos suelen no ser variables pero pueden ser cargados con errores
+    stable var especie = _especie; 
     stable var raza = _raza;
-    stable var naciminento = _fechaNacimiento;
+    stable var nacimiento = _fechaNacimiento;
     stable var ownerName = _ownerName;
     stable var ownerPhone = _ownerPhone;
     stable var eMail : Text = _ownerEmail;
@@ -39,8 +41,8 @@ shared ({ caller }) actor class Pet(_owner: Principal,
         if (caller != owner) { return "unauthorized caller" };
         let newAdmin = Principal.fromText(_newAdmin);
         if (not isAdmin(newAdmin)){
-            let remoteVet = actor(_newAdmin): actor {isVet: shared () -> async Bool}; //creo una referencia al supuesto canister Vet
-            let acceptPrincipal = await remoteVet.isVet();
+            let remoteVet = actor(Principal.toText(rootPrincipal)): actor {isVet: shared (Principal) -> async Bool}; //creo una referencia al supuesto canister Vet
+            let acceptPrincipal = await remoteVet.isVet(newAdmin);
             if(not acceptPrincipal){return "The Principal is not Vet"};//Comprobamos que el Principal ingresado es de un Vet
             var tempBuffer = Buffer.fromArray<Principal>(adminArray);
             tempBuffer.add(newAdmin);
