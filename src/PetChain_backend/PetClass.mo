@@ -25,26 +25,7 @@ shared ({ caller }) actor class Pet(_owner: Principal,
     stable var eMail : Text = _ownerEmail;
     stable var eventosDiarios = List.nil<Text>();
     stable var eventosClinicos = List.nil<Text>();
-    
-    //Los admin podran ingresar datos relacionados con los episodios clinicos de las mascotas
-    // stable var adminList = List.fromArray<Principal>([caller]);
-    // func isAdmin(p : Principal) : (Bool) {
-    //     let auth = List.find<Principal>(adminList, func(n) { n == caller });
-    //     return switch auth {
-    //         case null { false };
-    //         case _ { true };
-    //     };
-    // };
 
-    // public shared ({ caller }) func addAdminToList(_newAdmin : Principal) : async (Text) {
-
-    //     if (caller != owner) { return "unauthorized caller" };
-    //     if (not isAdmin(_newAdmin)) {
-    //         adminList := List.push(_newAdmin, adminList); //que feo
-    //         return "administrator entered successfully";
-    //     };
-    //     return "The administrator was already in the database";
-    // };
     stable var adminArray = [caller];
 
     func isAdmin(p: Principal): Bool{
@@ -58,10 +39,14 @@ shared ({ caller }) actor class Pet(_owner: Principal,
         if (caller != owner) { return "unauthorized caller" };
         let newAdmin = Principal.fromText(_newAdmin);
         if (not isAdmin(newAdmin)){
+            let remoteVet = actor(_newAdmin): actor {isVet: shared () -> async Bool}; //creo una referencia al supuesto canister Vet
+            let acceptPrincipal = await remoteVet.isVet();
+            if(not acceptPrincipal){return "The Principal is not Vet"};//Comprobamos que el Principal ingresado es de un Vet
             var tempBuffer = Buffer.fromArray<Principal>(adminArray);
             tempBuffer.add(newAdmin);
             adminArray := Buffer.toArray(tempBuffer);
             return "administrator entered successfully";
+            
         };
         return "The administrator was already in the database";
     };
@@ -129,7 +114,5 @@ shared ({ caller }) actor class Pet(_owner: Principal,
         if (isAdmin(caller) or caller == owner) {return eMail};
         return "";
     };
-    
-
 
 };
