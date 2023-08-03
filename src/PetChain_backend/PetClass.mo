@@ -27,14 +27,14 @@ shared ({ caller }) actor class Pet(_rootPrincipal: Principal,
     stable var eventosDiarios = List.nil<Text>();
     stable var eventosClinicos = List.nil<Text>();
 
-    stable var adminArray = [caller]; //El unico admin hasta aquí es el canister Vet desde el que se creó el este Pet 
+    stable var adminArray = [caller]; //El unico admin hasta aquí es el Vet desde el que se creó  este Pet 
 
     func isAdmin(p: Principal): Bool{
         for(admin in adminArray.vals()) { if(p == admin){ return true}};
         return false;
     };
 
-    public shared ({caller}) func addAdminToList(_newAdmin: Text):async Text{
+    public shared ({caller}) func addAdminToArray(_newAdmin: Text):async Text{
         if (caller != owner) { return "unauthorized caller" };
         let newAdmin = Principal.fromText(_newAdmin);
         if (isAdmin(newAdmin)) { return "The administrator was already in the database"};
@@ -42,7 +42,7 @@ shared ({ caller }) actor class Pet(_rootPrincipal: Principal,
         let remoteMain = actor(Principal.toText(rootPrincipal)): actor {isVet: shared (Principal) -> async Bool}; //referencia al canister main
         let acceptPrincipal = await remoteMain.isVet(newAdmin); // Verificamos que el principal ingresado es un Vet (funcion isVet del canister main)
         if(not acceptPrincipal) { return "The Principal is not Vet"};
-        
+
         var tempBuffer = Buffer.fromArray<Principal>(adminArray);
         tempBuffer.add(newAdmin);
         adminArray := Buffer.toArray(tempBuffer);
