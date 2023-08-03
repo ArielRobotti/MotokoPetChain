@@ -57,7 +57,31 @@ The animals Vet: ahw5u-keaaa-aaaaa-qaaha-cai
     Fiodor Pet: aax3a-h4aaa-aaaaa-qaahq-cai
 Los amigos: c5kvi-uuaaa-aaaaa-qaaia-cai
     Martin Pet: c2lt4-zmaaa-aaaaa-qaaiq-cai
+------------------------------------------------
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+main: bkyz2-fmaaa-aaaaa-qaaaq-cai
+Los amigos: be2us-64aaa-aaaaa-qaabq-cai no tiene getInfo
+    Tobby: br5f7-7uaaa-aaaaa-qaaca-cai
+The animals: bw4dl-smaaa-aaaaa-qaacq-cai no tiene getInfo
+TAREA: ver como actualizar un canister generado desde otro canister
+
+Animalix: b77ix-eeaaa-aaaaa-qaada-cai
+    Roky: by6od-j4aaa-aaaaa-qaadq-cai
+
+dfx canister call br5f7-7uaaa-aaaaa-qaaca-cai addAdminToList '("bw4dl-smaaa-aaaaa-qaacq-cai")'
 
 
 
