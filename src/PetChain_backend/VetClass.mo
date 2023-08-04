@@ -24,12 +24,13 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     //---- declaraciones de tipos -----
     type Turno = Types.Turno;
     type Clinical_record = Types.Clinical_record;
-    
+    type Evento = Types.Evento;
+
     //stable var calendarioTurnos: [[Turno]] = [];
 
     public shared ({ caller }) func newPet(_name : Text) : async Principal {
-        //FEE 13846199230
-        Cycles.add(13846199230);
+        //FEE 27_692_398_460
+        Cycles.add(27_692_398_460);
         let miPet = await PetClass.Pet(rootPrincipal, caller, _name, "", "", "", "", 0, ""); // se instancia un actor de tipo Pet
         let principal = Principal.fromActor(miPet); // se guarda el Principal del canister creado
         petList := List.push(principal, petList); // en la lista de Pets
@@ -104,7 +105,14 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     };
 
     public shared ({caller}) func readClinicRegFromPet(pet: Text):async [Clinical_record]{
+        if(caller != owner) {return []}; 
         let remotePet = actor(pet): actor {readClinicReg: shared () -> async [Clinical_record]};
         await remotePet.readClinicReg();
+    };
+
+    public shared ({caller}) func readEventosDiariosOnPet(pet: Text): async [Evento]{
+        if(caller != owner) {return []};
+        let remotePet = actor(pet): actor {readEventosDiarios: shared () -> async [Evento]};
+        await remotePet.readEventosDiarios();
     };
 };

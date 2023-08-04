@@ -21,6 +21,7 @@ shared ({ caller }) actor class Pet(
 
     //---------- declaraciones de typos -------
     type Clinical_record = Types.Clinical_record;
+    type Evento = Types.Evento;
 
     // ----------------------------------------------
     stable let root = _root; // Este principal es para interactuar con el canister main
@@ -32,7 +33,7 @@ shared ({ caller }) actor class Pet(
     stable var ownerName = _ownerName;
     stable var ownerPhone = _ownerPhone;
     stable var eMail : Text = _ownerEmail;
-    stable var eventosDiarios = List.nil<Text>();
+    stable var eventosDiarios : [Evento] = [];
     stable var eventosClinicos : [Clinical_record] = []; //
 
     stable var adminArray = [caller]; //El unico admin hasta aquí es el Vet desde el que se creó  este Pet
@@ -158,4 +159,17 @@ shared ({ caller }) actor class Pet(
         if (not isAdmin(caller) and caller != owner) { return [] };
         return eventosClinicos;
     };
+
+    public shared ({caller}) func writeOnEventosDiarios(ev: Evento): async Bool{
+        if(caller != owner){return false};
+        var tempBuffer = Buffer.fromArray<Evento>(eventosDiarios);
+        tempBuffer.add(ev);     //ev vendrá con el formato adecuado desde el frontend 
+        eventosDiarios := Buffer.toArray<Evento>(tempBuffer);
+        return true;
+    };
+    public shared ({caller}) func readEventosDiarios(): async [Evento]{
+        if(caller != owner and not isAdmin(caller)){ return []};
+        return eventosDiarios;
+    };
+
 };

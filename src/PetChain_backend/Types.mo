@@ -18,6 +18,12 @@ module{
         diagnostico: Text;
         tratamiento: Text;
     };
+
+    public type Evento ={
+        date: Int; //Timestamp en segundos
+        titulo: Text;
+        descripcion: Text;
+    };
     
     /*public func regToBlob(r : Clinical_record): async [Blob]{
         var tempBuffer = Buffer.Buffer<Blob>(1);
