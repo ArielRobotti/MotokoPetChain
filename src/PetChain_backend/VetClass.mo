@@ -84,4 +84,15 @@ shared ({ caller }) actor class Vet(_owner : Principal,
         daysOfWeek[Int.abs(index)];
     };
 
+    public shared ({caller}) func writeRegOnPet(pet: Text,
+                                                date: Int,
+                                                sintomas: Text,
+                                                diagnostico: Text,
+                                                tratamiento: Text): async Bool {
+        if (caller != owner) { return false };
+        let remotePet = actor(pet): actor {writeClinicReg: shared (Int, Text, Text, Text) -> async Bool};
+        let success = await remotePet.writeClinicReg(date, sintomas, diagnostico, tratamiento);
+        success;
+    };
+
 };

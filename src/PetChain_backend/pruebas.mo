@@ -14,7 +14,10 @@ actor{
     public func arrayToSet(x: [Text]):async [Text]{
         var set = TrieSet.fromArray(x, Text.hash, Text.equal);
         return TrieSet.toArray(set);
-    }
+    };
+
+    public shared ({caller}) func getCaller(): async Principal{caller};
+    
 
 
 }

@@ -17,10 +17,10 @@ actor {
     vetArray := Buffer.toArray(tempBuffer); //en el array de Vets
     return principal; // y se retorna el principal para poder acceder luego al canister
   };
+
   public shared func isVet(_p : Principal) : async Bool {
-    for (vet in vetArray.vals()) {
-      if (vet == _p) { return true };
-    };
+    for (vet in vetArray.vals()) { if (vet == _p) { return true } };
     return false;
   };
+  
 };

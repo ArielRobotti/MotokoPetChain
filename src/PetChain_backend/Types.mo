@@ -1,24 +1,39 @@
-module{/*
-    public type Client = {
-        id: Nat64;
-        name: Text;
-        lastName: Text;
-        phone: Nat64;
+import Blob "mo:base/Blob";
+import Buffer "mo:base/Buffer";
 
-    };
-    public type Pet = {
-        id: Nat64;
-        name: Text;
-        owner: Client;
-    };*/
+module{
+
     public type Turno = {
         date: Int; //Timestamp del dia del turno 
         client: Principal; // Cuando es null el turno está disponible
     };
     public type Calendar = {
-        var history: [Turno];
-        var today: [Turno];
-        var netxFiveDays: [[Turno]];
+        history: [Turno];
+        today: [Turno];
+        netxFiveDays: [[Turno]];
+    };
+    public type Clinical_record = {
+        date: Int;
+        sintomas: Text;
+        diagnostico: Text;
+        tratamiento: Text;
     };
     
+    /*public func regToBlob(r : Clinical_record): async [Blob]{
+        var tempBuffer = Buffer.Buffer<Blob>(1);
+        tempBuffer.add(Blob.fromInt(r.date));
+        tempBuffer.add(Blob.fromText(r.sintomas));
+        tempBuffer.add(Blob.fromText(r.diagnostico));
+        tempBuffer.add(Blob.fromText(r.tratamiento));
+        return Blob.toArray(tempBuffer);
+    };
+
+    shared func regFronBlob(b: [Blob]): async Clinical_record{
+        let date = Blob.toInt(b[0]);
+        let sintomas = Blob.toText(b[1]);
+        let diagnostico = Blob.toText(b[2]);
+        let tratamiento = Blob.toText(b[3]);
+        return {date; sintomas; diagnostico; tratamiento};
+    };
+    */
 }
