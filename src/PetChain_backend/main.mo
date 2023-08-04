@@ -9,7 +9,7 @@ actor {
 
   public shared ({ caller }) func newVet(_name : Text) : async Principal {
     //FEE crear un canister 13846199230
-    Cycles.add(13846199230 + 13_846_199_230 + 13_846_199_230);
+    Cycles.add(138461992300);
     let miVet = await VetClass.Vet(caller, _name, "", ""); // se instancia un actor de tipo Vet
     let principal = Principal.fromActor(miVet); // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
