@@ -128,7 +128,7 @@ shared ({ caller }) actor class Pet(
     };
 
     //--------------------------------------------------------
-    public shared ({ caller }) func writeClinicReg(
+    /*public shared ({ caller }) func writeClinicReg(
         _date : Int,
         _sintomas : Text,
         _diagnostico : Text,
@@ -145,6 +145,12 @@ shared ({ caller }) actor class Pet(
         tempBuffer.add(registro);
         eventosClinicos := Buffer.toArray<Clinical_record>(tempBuffer);
         return true;
+    };*/
+    public shared ({caller}) func writeClinicReg(rec: Clinical_record): async Bool{
+        if (not isAdmin(caller)) { return false };
+        var tempBuffer = Buffer.fromArray<Clinical_record>(eventosClinicos);
+        tempBuffer.add(rec);
+        eventosClinicos := Buffer.toArray(tempBuffer);
+        return true;
     };
-
 };

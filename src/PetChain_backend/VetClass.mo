@@ -23,6 +23,7 @@ shared ({ caller }) actor class Vet(_owner : Principal,
 
     //---- declaraciones de tipos -----
     type Turno = Types.Turno;
+    type Clinical_record = Types.Clinical_record;
     
     //stable var calendarioTurnos: [[Turno]] = [];
 
@@ -84,7 +85,7 @@ shared ({ caller }) actor class Vet(_owner : Principal,
         daysOfWeek[Int.abs(index)];
     };
 
-    public shared ({caller}) func writeRegOnPet(pet: Text,
+    /*public shared ({caller}) func writeRegOnPet(pet: Text,
                                                 date: Int,
                                                 sintomas: Text,
                                                 diagnostico: Text,
@@ -93,6 +94,11 @@ shared ({ caller }) actor class Vet(_owner : Principal,
         let remotePet = actor(pet): actor {writeClinicReg: shared (Int, Text, Text, Text) -> async Bool};
         let success = await remotePet.writeClinicReg(date, sintomas, diagnostico, tratamiento);
         success;
+    };*/
+    public shared ({caller}) func writeRegOnPet(pet: Text, rec: Clinical_record): async Bool {
+        if (caller != owner) { return false };
+        let remotePet = actor(pet): actor {writeClinicReg: shared (Clinical_record) -> async Bool};
+        let success = await remotePet.writeClinicReg(rec);
+        success;
     };
-
 };
