@@ -12,7 +12,8 @@ import PetClass "PetClass";
 shared ({ caller }) actor class Vet(_owner : Principal,
                                     _nombre : Text,
                                     _titular : Text,
-                                    _domicilio : Text) {
+                                    _domicilio : Text,
+                                    _eMail: Text) {
     stable let rootPrincipal = caller; //corresponde al Principal del main
     stable let owner = _owner;
     stable var nombre = _nombre;
@@ -87,11 +88,11 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     };
 
     public shared ({caller}) func writeRegOnPet2(pet: Text,
-                                                date: Int,
                                                 sintomas: Text,
                                                 diagnostico: Text,
                                                 tratamiento: Text): async Bool {
         if (caller != owner) { return false };
+        let date = Time.now();
         let remotePet = actor(pet): actor {writeClinicReg2: shared (Int, Text, Text, Text) -> async Bool};
         let success = await remotePet.writeClinicReg2(date, sintomas, diagnostico, tratamiento);
         success;

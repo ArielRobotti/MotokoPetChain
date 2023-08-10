@@ -2,15 +2,15 @@ import VetClass "VetClass";
 import Principal "mo:base/Principal";
 import Buffer "mo:base/Buffer";
 import Cycles "mo:base/ExperimentalCycles";
-import List "mo:base/List"
+import HashMap "mo:base/HashMap";
 
 actor root{
   stable var vetArray : [Principal] = [];
 
   public shared ({ caller }) func newVet(_name : Text) : async Principal {
     //FEE crear un canister 13846199230
-    Cycles.add(7_692_307_692 * 10);
-    let miVet = await VetClass.Vet(caller, _name, "", ""); // se instancia un actor de tipo Vet
+    Cycles.add(7_692_307_692 * 10); 
+    let miVet = await VetClass.Vet(caller, _name, "", "",""); // se instancia un actor de tipo Vet
     let principal = Principal.fromActor(miVet); // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
     tempBuffer.add(principal);

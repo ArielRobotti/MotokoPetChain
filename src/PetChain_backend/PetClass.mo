@@ -5,6 +5,7 @@ import Iter "mo:base/Iter";
 import List "mo:base/List";
 import Nat "mo:base/Nat";
 import Text "mo:base/Text";
+import Int "mo:base/Int";
 import Types "Types";
 
 shared ({ caller }) actor class Pet(
@@ -15,7 +16,7 @@ shared ({ caller }) actor class Pet(
     _raza : Text,
     _fechaNacimiento : Text,
     _ownerName : Text,
-    _ownerPhone : Nat,
+    _ownerPhone : Int,
     _ownerEmail : Text,
     ) {
 
@@ -78,7 +79,7 @@ shared ({ caller }) actor class Pet(
         };
         return false;
     };
-    public shared ({ caller }) func setOwnerPhone(_newPhone : Nat) : async Bool {
+    public shared ({ caller }) func setOwnerPhone(_newPhone : Int) : async Bool {
         if (caller == owner and _newPhone > 100000) {
             ownerPhone := _newPhone;
             return true;
@@ -99,7 +100,7 @@ shared ({ caller }) actor class Pet(
             return [
                 "Nombre: " # name,
                 "Cliente: " # ownerName,
-                "Phone: " # Nat.toText(ownerPhone),
+                "Phone: " # Int.toText(ownerPhone),
                 "Email: " # eMail,
             ];
         };
@@ -119,7 +120,7 @@ shared ({ caller }) actor class Pet(
         if (isAdmin(caller) or caller == owner) { return ownerName };
         return "";
     };
-    public shared query ({ caller }) func getOwnerPhone() : async Nat {
+    public shared query ({ caller }) func getOwnerPhone() : async Int {
         if (isAdmin(caller) or caller == owner) { return ownerPhone };
         return 0;
     };

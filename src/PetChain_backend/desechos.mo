@@ -2,25 +2,7 @@ import Iter "mo:base/Iter";
 import Array "mo:base/Array";
 
 actor {
-    stable var admins : [Principal] = [];
-    public shared ({ caller }) func addAdmin(_newAdmin : Principal) : async (Text) {
-
-        for (i in Iter.range(0, Array.size(admins) - 1)) {
-            if (admins[i] == _newAdmin) {
-                return "The administrator was already in the database";
-            };
-            if (admins[i] == caller) {
-                for (j in Iter.range(i + 1, Array.size(admins) - 1)) {
-                    if (admins[j] == _newAdmin) {
-                        return "The administrator was already in the database";
-                    };
-                };
-                admins := Array.append(admins, [_newAdmin]);
-                return "administrator entered successfully";
-            };
-        };
-        return "unauthorized caller";
-    };
+    
 };
 
     //Los admin podran ingresar datos relacionados con los episodios clinicos de las mascotas
@@ -45,19 +27,39 @@ actor {
 
 
 /* 
-identity owner: xyhzp-zrjop-dxido-ehezj-ipucb-todkp-5reb5-oaxey-q2nce-4ss2t-yqe
+identity mqtt: xyhzp-zrjop-dxido-ehezj-ipucb-todkp-5reb5-oaxey-q2nce-4ss2t-yqe
 Identity motoko_bootcamp_2023: caegz-3kk7d-zfiyt-buhqv-qnbtq-f7aaj-6nbet-mms7g-5xiep-g4met-3ae
 
-veterinaria: bkyz2-fmaaa-aaaaa-qaaaq-cai
-mascota Dostoyevsky:  bw4dl-smaaa-aaaaa-qaacq-cai
 ---------------------------------------------
-main bkyz2-fmaaa-aaaaa-qaaaq-cai
-
-The animals Vet: ahw5u-keaaa-aaaaa-qaaha-cai
-    Fiodor Pet: aax3a-h4aaa-aaaaa-qaahq-cai
-Los amigos: c5kvi-uuaaa-aaaaa-qaaia-cai
-    Martin Pet: c2lt4-zmaaa-aaaaa-qaaiq-cai
+root bkyz2-fmaaa-aaaaa-qaaaq-cai
+    Vet Hola Mundo Animal: asrmz-lmaaa-aaaaa-qaaeq-cai
+        pet Alma:   br5f7-7uaaa-aaaaa-qaaca-cai
+        pet Blacky: bw4dl-smaaa-aaaaa-qaacq-cai
+        pet Tobby:  by6od-j4aaa-aaaaa-qaadq-cai
+    Vet Animalix: avqkn-guaaa-aaaaa-qaaea-cai
 ------------------------------------------------
+
+
+
+
+
+
+
+main: bkyz2-fmaaa-aaaaa-qaaaq-cai
+    Vet Hola Mundo Animal: aax3a-h4aaa-aaaaa-qaahq-cai
+        Pet Alma: c5kvi-uuaaa-aaaaa-qaaia-cai
+    Vet Animalix: c2lt4-zmaaa-aaaaa-qaaiq-cai
+    
+
+
+
+
+
+
+
+
+
+
 
 
 
