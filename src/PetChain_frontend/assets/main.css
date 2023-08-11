@@ -7,7 +7,7 @@
 }
 
 body {
-  background-image: url("../assets/bg.png");
+  background-image: url("./bg.png");
   font-family: Arial, sans-serif;
   background-attachment: fixed;
 
@@ -47,6 +47,7 @@ nav a:hover {
 
 .content {
   margin-top: 60px;
+  margin-bottom: 60px
   /* Espacio para la barra de navegación */
 }
 
@@ -91,7 +92,6 @@ nav a:hover {
   /* Máximo ancho */
   margin: 0 auto;
 }
-
 
 .form-section {
   margin-bottom: 20px;
@@ -142,6 +142,24 @@ input {
 
 button:hover {
   background-color: #155eb1;
+}
+footer {
+  background-color: #1b75db;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+footer p {
+  margin: 0;
+  padding: 5px 10px;
 }
 
 @media screen and (min-width: 768px) {
