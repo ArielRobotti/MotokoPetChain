@@ -14,7 +14,17 @@ document.addEventListener("DOMContentLoaded", function () {
       cargarContenidoDinamico("crear-mascota.html");
     } else if (event.target.id === "crearVeterinaria") {
       cargarContenidoDinamico("crear-veterinaria.html");
-    }
+    } else if (evento.id === "newPet"){
+      console.log("PetChain_backend.newPet()");
+    } else if (event.id === "newVet"){
+      var vet = PetChain_backend.newVet(
+                                    "xyhzp-zrjop-dxido-ehezj-ipucb-todkp-5reb5-oaxey-q2nce-4ss2t-yqe",
+                                    "Veterinaria Garchetti",
+                                    "Juan Pablo Garcha",
+                                    "Independencia 3454",
+                                    "juangarcha@gmail.com");
+      console.log(vet);
+    };
   });
 
   function cargarContenidoDinamico(url) {
@@ -27,6 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     xhr.send();
   }
-  var vets = PetChain_backend.isVet("ytdlf-kaaaa-aaaak-qcjwq-cai");
-  console.log(vets);
+  //var vets = PetChain_backend.isVet("ytdlf-kaaaa-aaaak-qcjwq-cai");
+  //console.log(vets);
 });
