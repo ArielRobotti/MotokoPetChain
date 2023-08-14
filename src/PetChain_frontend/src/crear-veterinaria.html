@@ -1,49 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./main.css">
-    <title>Crear Mascota</title>
-</head>
-
-<body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="about.html">Sobre Pet Chain</a></li>
-            <li><a href="tutorial.html">Tutorial</a></li>
-            <li><a href="internet-computer.html">Internet Computer</a></li>
-            <li><a href="faq.html">Preguntas Frecuentes</a></li>
-        </ul>
-    </nav>
-
-    <div class="content">
-        <form class="pet-form">
-            <div class="form-section">
-                <h2>Datos de la Veterinaria</h2>
-                <input type="text" id="nombreVeterinaria" name="nombreVeterinaria" required placeholder="Nombre de la veterinaria">
-                <input type="text" id="direccion" name="direccion" required placeholder="Direccion">
-                <input type="text" id="telefono" name="telefono" required placeholder="telefono">
-                <input type="text" id="eMail" name="eMail" placeholder="Correo Electrónico">
-                <input type="text" id="titular" name="titular" required placeholder="Titular a cargo">
-                <input type="text" id="matricula" name="matricula" required placeholder="Matricula profesional">
-            </div>
-
-            <button id="submit" type="submit">Crear Veterinaria</button>
-
-        </form>
+<form class="pet-form">
+    <div class="form-section">
+        <h2>Datos de la Veterinaria</h2>
+        <input type="text" id="nombreVeterinaria" name="nombreVeterinaria" required
+            placeholder="Nombre de la veterinaria">
+        <input type="text" id="direccion" name="direccion" required placeholder="Direccion">
+        <input type="text" id="telefono" name="telefono" required placeholder="telefono">
+        <input type="text" id="eMail" name="eMail" placeholder="Correo Electrónico">
+        <input type="text" id="titular" name="titular" required placeholder="Titular a cargo">
+        <input type="text" id="matricula" name="matricula" required placeholder="Matricula profesional">
     </div>
-
-    <footer>
-        <p>Motoko Bootcamp ICPLatam hub</p>
-        <p>Project by Ariel Robotti</p>
-        <p>Dfinity</p>
-    </footer>
-
-    <script type="module" src="./formVet.js"></script>
-</body>
-
-</html>
+    <button id="submit" type="submit">Crear Veterinaria</button>
+</form>
+<script type="module" src="./formVet.js"></script>

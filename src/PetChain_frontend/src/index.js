@@ -1,19 +1,32 @@
 import { PetChain_backend } from "../../declarations/PetChain_backend";
 
-document.querySelector("form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const button = e.target.querySelector("button");
+document.addEventListener("DOMContentLoaded", function () {
+  var contenidoDinamico = document.getElementById("contenido-dinamico");
+  var botonInicio = document.getElementById("inicio");
+  cargarContenidoDinamico("crear-perfil.html")
 
-  const name = document.getElementById("name").value.toString();
+  botonInicio.addEventListener("click", function () {
+    cargarContenidoDinamico("crear-perfil.html");
+  });
+  contenidoDinamico.addEventListener("click", function (event) {
+    console.log(event.target.id);
+    if (event.target.id === "crearMascota") {
+      cargarContenidoDinamico("crear-mascota.html");
+    } else if (event.target.id === "crearVeterinaria") {
+      cargarContenidoDinamico("crear-veterinaria.html");
+    }
+  });
 
-  button.setAttribute("disabled", true);
-
-  // Interact with foo actor, calling the greet method
-  const greeting = await PetChain_backend.greet(name);
-
-  button.removeAttribute("disabled");
-
-  document.getElementById("greeting").innerText = greeting;
-
-  return false;
+  function cargarContenidoDinamico(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        contenidoDinamico.innerHTML = xhr.responseText;
+      }
+    };
+    xhr.send();
+  }
+  var vets = PetChain_backend.isVet("ytdlf-kaaaa-aaaak-qcjwq-cai");
+  console.log(vets);
 });

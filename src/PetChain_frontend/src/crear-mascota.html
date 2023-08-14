@@ -1,55 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="./main.css">
-    <title>Crear Mascota</title>
-</head>
-
-<body>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="about.html">Sobre Pet Chain</a></li>
-            <li><a href="tutorial.html">Tutorial</a></li>
-            <li><a href="internet-computer.html">Internet Computer</a></li>
-            <li><a href="faq.html">Preguntas Frecuentes</a></li>
-        </ul>
-    </nav>
-
-    <div class="content">
-        <form class="pet-form">
-            <div class="form-section">
-                <h2>Datos del Animal</h2>
-                <input type="text" id="nombreMascota" name="nombreMascota" required placeholder="Nombre de la mascota">
-                <input type="text" id="fechaNacimiento" name="fechaNacimiento" required
-                    placeholder="Fecha de nacimiento (dd/mm/aaa)">
-                <input type="text" id="especie" name="especie" required placeholder="Especie. (P.Ej Perro)">
-                <input type="text" id="raza" name="raza" placeholder="Raza. (P.Ej Dogo)">
-            </div>
-            <hr>
-            <div class="form-section">
-                <h2>Datos del Dueño</h2>
-                <input type="text" id="nombreClient" name="nombreClient" required placeholder="Nombre completo del dueño">
-                <input type="tel" id="telefono" name="telefono" placeholder="Telefono">
-                <input type="email" id="email" name="email" placeholder="Correo electrónico">
-            </div>
-
-            <button id="submit" type="submit">Crear historia Clinica</button>
-
-        </form>
+<form class="pet-form">
+    <div class="form-section">
+        <h2>Datos del Animal</h2>
+        <input type="text" id="nombreMascota" name="nombreMascota" required placeholder="Nombre de la mascota">
+        <input type="text" id="fechaNacimiento" name="fechaNacimiento" required
+            placeholder="Fecha de nacimiento (dd/mm/aaa)">
+        <input type="text" id="especie" name="especie" required placeholder="Especie. (P.Ej Perro)">
+        <input type="text" id="raza" name="raza" placeholder="Raza. (P.Ej Dogo)">
+    </div>
+    <hr>
+    <div class="form-section">
+        <h2>Datos del Dueño</h2>
+        <input type="text" id="nombreClient" name="nombreClient" required placeholder="Nombre completo del dueño">
+        <input type="tel" id="telefono" name="telefono" placeholder="Telefono">
+        <input type="email" id="email" name="email" placeholder="Correo electrónico">
     </div>
 
-    <footer>
-        <p>Motoko Bootcamp ICPLatam hub</p>
-        <p>Project by Ariel Robotti</p>
-        <p>Dfinity</p>
-    </footer>
+    <button id="submit" type="submit">Crear historia Clinica</button>
 
-    <script type="module" src="./formPet.js"></script>
-</body>
+</form>
 
-</html>
+
+<script type="module" src="./formPet.js"></script>

@@ -1,3 +1,7 @@
+.transition-fade {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
 .image-title {
   display: block;
   text-align: center;
@@ -7,7 +11,6 @@
 }
 
 body {
-  background-image: url("./bg.png");
   font-family: Arial, sans-serif;
   background-attachment: fixed;
 
@@ -48,7 +51,7 @@ nav a:hover {
 .content {
   margin-top: 60px;
   margin-bottom: 60px
-  /* Espacio para la barra de navegación */
+    /* Espacio para la barra de navegación */
 }
 
 .button-container {
@@ -143,6 +146,7 @@ input {
 button:hover {
   background-color: #155eb1;
 }
+
 footer {
   background-color: #1b75db;
   color: white;

@@ -1,4 +1,4 @@
-import { PetChain_backend } from "../../declarations/PetChain_backend";
+//import { PetChain_backend } from "../../declarations/PetChain_backend";
 console.log("cargando");
 document.querySelector("form").addEventListener("submit", async (e) => {
 

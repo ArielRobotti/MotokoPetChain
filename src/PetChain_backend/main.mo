@@ -1,3 +1,13 @@
+/*
+PetChain_backend canister created on network ic with canister  id: yucnr-hyaaa-aaaak-qcjwa-cai
+PetChain_frontend canister created on network ic with canister id: ytdlf-kaaaa-aaaak-qcjwq-cai
+
+Mainet front canister: https://ytdlf-kaaaa-aaaak-qcjwq-cai.icp0.io/
+
+Mainet back  canister: https://yucnr-hyaaa-aaaak-qcjwa-cai.icp0.io/
+
+*/
+
 import VetClass "VetClass";
 import Principal "mo:base/Principal";
 import Buffer "mo:base/Buffer";
