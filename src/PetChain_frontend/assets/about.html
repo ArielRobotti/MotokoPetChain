@@ -1,0 +1,42 @@
+<div class="textBox">
+    <h2>Motoko Pet Chain</h2>
+    <p>
+        Motoco Pet Chain es un sistema de gestion de historias clinicas de mascotas pensado para brindarle a los clientes 
+        la propiedad exclusiva de los datos de su mascota, pudiendo controlar el acceso a los registros de su amigo peludo,
+        administrar los permisos de escritura de registros clinicos, registrar datos relacionados con eventos que 
+        considere relevantes, entre otros aspectos. La interacción con los diferentes veterinarios disponibles, se lleva a cabo 
+        mediante una interfase sencilla, en la que se podrá enviar al veterinario elegido una solicitud de atención mediante 
+        la que se establecerá una relacion de administración conjunta del perfil del animal. Esta administración conjunta
+        consiste en que el veterinario habilitado como administrador, puede registrar en la historia clinica de la mascota
+        los informes medicos correspondientes a las visitas que ésta hubiere concretado al mensionado veterinario, como así 
+        también podra acceder a todos los datos y registros del animal.
+    </p>
+    <p>
+        Cabe destacar que todos los registros clinicos del animal son inmutables y no existe ningun permiso mediante el cual
+        se pueda modificar lo que un veterinario ha registrado. De esta forma se intenta establecer una transparencia absoluta
+        en relacion a la actividad que los profesionales de la salud animal hayan realizado a lo largo de la vida de una 
+        mascota, y consecuentemente se incrementará sustancialemente la calidad en el cuidado de las mismas.
+    </p>
+    <h2>Arquitectura</h2>
+    <p>
+        Uno de los nucleos filosoficos del sistema es la idea de una descentralización no solo a nivel infraestructura,
+        sino tambien a nivel estructural. En ese sentido se decidió brindar a todos los individuos participantes, la propiedad
+        sobre los datos tanto de las mascotas, en el caso de los clientes, como la de los datos relacionados a cada 
+        establecimiento veterinario, en el caso de los veterinarios, de tal manera que cada actor tenga asignada una unidad
+        computacional y de almacenamiento, en adelante Canister, exclusiva para dicho proposito.
+        
+    </p>
+    <p>
+        La eliminacion de un organismo central en el que recaiga toda o la mayor parte de las funcionalidades del sistema
+        es un logro al que se pudo llegra gracias a una de las caracteristicas mas interesantes del protocolo ICP, y es
+        la capacidad de interacción directa entre los diferentes Canister que conformarán la red de monitoreo y gestión
+        de historias clinicas.
+    </p>
+    <h2>Proximas ffuncionalidades</h2>
+    <p>
+        Uno de los elementos pendientes de incluir en el sistema es un subsistema de gestion de turnos, como estructura de datos
+        administrada a medida por cada veterinaria, en funcion de sus horarios de atención, y que podrá ser consultado por cualquier
+        cliente, a fin de conocer las opciones de turnos disponibles del correspondiente establecimiento y poder solicitar el turno
+        que mejor se ajusta a sus horarios. 
+    </p>
+</div>
