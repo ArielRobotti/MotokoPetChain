@@ -1,45 +1,51 @@
-// import { PetChain_backend } from "../../declarations/PetChain_backend";
+import { PetChain_backend } from "../../declarations/PetChain_backend";
 
 document.addEventListener("DOMContentLoaded", function () {
+
   var contenidoDinamico = document.getElementById("contenido-dinamico");
-  var botonInicio = document.getElementById("inicio");
   var nav = document.getElementsByTagName("nav")[0];
   cargarContenidoDinamico("crear-perfil.html")
   var vista = "inicio";
 
   nav.addEventListener("click", function(event){
     event.preventDefault();
+    console.log(event.target.id);
     if(vista === event.target.id){return};
     vista = event.target.id;
-    if(event.target.id === "inicio"){cargarContenidoDinamico("crear-perfil.html");}
+    if(event.target.id === "inicio"){cargarContenidoDinamico("crear-perfil.html")}
     else if(event.target.id === "about"){cargarContenidoDinamico("about.html")}
     else if(event.target.id === "tutorial"){}
-    else if(event.target.id === "ICP"){}
+    else if(event.target.id === "ICP"){window.location.href = "https://internetcomputer.org/"}
     else if(event.target.id === "ask"){};    
   })
 
-  contenidoDinamico.addEventListener("click", function (event) {
+  contenidoDinamico.addEventListener("click", async function (event) {
     if (event.target.id === "crearMascota") {
       cargarContenidoDinamico("crear-mascota.html");
-      vista = event.target,id;
+      vista = event.target.id;
     } else if (event.target.id === "crearVeterinaria") {
       cargarContenidoDinamico("crear-veterinaria.html");
-      vista = event.target,id;
+      vista = event.target.id;
     } else if (event.target.id === "newPet") {
+      event.preventDefault();
       console.log("PetChain_backend.newPet()");
     } else if (event.target.id === "newVet") {
-      // var vet = PetChain_backend.newVet(
-      //                               "xyhzp-zrjop-dxido-ehezj-ipucb-todkp-5reb5-oaxey-q2nce-4ss2t-yqe",
-      //                               "Veterinaria Garchetti",
-      //                               "Juan Pablo Garcha",
-      //                               "Independencia 3454",
-      //                               "juangarcha@gmail.com");
-      console.log("vet");
+      event.preventDefault();
+      const vetForm = document.getElementById("vet-form");
+      const formData = new FormData(vetForm);
+      console.log(formData.get("nombreVeterinaria"));
+      const principalVet = await PetChain_backend.newVet(formData.get("nombreVeterinaria"),
+                                                    formData.get("direccion"),
+                                                    formData.get("telefono"),
+                                                    formData.get("eMail"),
+                                                    formData.get("titular"),
+                                                    formData.get("matricula"),
+                                                    );
+      console.log(principalVet);
     };
   });
 
   function cargarContenidoDinamico(url) {
-
     var xhr = new XMLHttpRequest();
     xhr.open("GET", url, true);
     xhr.onreadystatechange = function () {

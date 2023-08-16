@@ -108,7 +108,7 @@ nav a:hover {
 }
 
 
-.pet-form {
+form {
   background-color: #f5f5f5;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(42, 196, 235, 0.1);

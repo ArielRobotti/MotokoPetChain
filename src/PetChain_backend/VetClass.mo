@@ -5,20 +5,25 @@ import Cycles "mo:base/ExperimentalCycles";
 import List "mo:base/List";
 import Types "Types";
 import Time "mo:base/Time";
-import Int "mo:base/Int";
 import Array "mo:base/Array";
 import PetClass "PetClass";
 
 shared ({ caller }) actor class Vet(_owner : Principal,
                                     _nombre : Text,
-                                    _titular : Text,
                                     _domicilio : Text,
-                                    _eMail: Text) {
+                                    _telefono: Text,
+                                    _eMail: Text,
+                                    _titular : Text,
+                                    _matricula: Text,
+                                    ) {
     stable let rootPrincipal = caller; //corresponde al Principal del main
     stable let owner = _owner;
     stable var nombre = _nombre;
     stable var titular = _titular;
     stable var domicilio = _domicilio;
+    stable var telefono = _telefono;
+    stable var eMail = _eMail;
+    stable var matricula = _matricula;
     
     stable var petList = List.nil<Principal>(); //Cambiar por un Array
 
@@ -60,11 +65,20 @@ shared ({ caller }) actor class Vet(_owner : Principal,
         };
         return false;
     };
+    public shared ({ caller }) func setTelefono(_t : Text) : async Bool {
+        if (caller == owner and _t != "") {
+            domicilio := _t;
+            return true;
+        };
+        return false;
+    };
 
     //----------------------- getters ------------------------------------------------
     public shared query func getInfo(): async [Text]{
         ["Nombre veterinaria: " # nombre, 
         "Domicilio: " # domicilio,
+        "Telefono: " # telefono,
+        "email: " # eMail,
         "Principal ID: " # Principal.toText(owner),
         "Titular: " # titular];
     };
@@ -73,6 +87,9 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     public query func getTitular() : async Text { titular };
     public query func getNombre() : async Text { nombre };
     public query func getDomicilio() : async Text { domicilio };
+    public query func getMail() : async Text { eMail };
+    public query func getTelefono() : async Text { telefono };
+
    
     public shared ({ caller }) func getInfoFromPet(petPrincipal : Text) : async [Text] {
         if (caller != owner) { return [] };
@@ -80,13 +97,13 @@ shared ({ caller }) actor class Vet(_owner : Principal,
         await remotePet.getInfo();
     };
 
-    // -------------------------------------------------------------------------------
-    public query func dayFromTimeStamp(t : Int) : async Text {
+    // --------------------- Para calendario ----------------------------------------------------------
+    /* public query func dayFromTimeStamp(t : Int) : async Text {
         let daysOfWeek = ["lunes", "martes", "miercoles", "jueves", "viernes", "", ""];
         let index = (t / 86400 + 3) % 7;
         daysOfWeek[Int.abs(index)];
     };
-
+    */
     public shared ({caller}) func writeRegOnPet2(pet: Text,
                                                 sintomas: Text,
                                                 diagnostico: Text,
