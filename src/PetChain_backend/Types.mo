@@ -29,7 +29,7 @@ module{
         nombre: Text;
         domicilio: Text;
         telefono: Text;
-        eMail: Text;
+        email: Text;
         titular:  Text;
         matricula: Text;
     };
@@ -40,7 +40,7 @@ module{
         raza: Text;
         ownerName: Text;
         ownerPhone: Text;
-        eMail : Text;
+        email : Text;
     };
     /*public func regToBlob(r : Clinical_record): async [Blob]{
         var tempBuffer = Buffer.Buffer<Blob>(1);

@@ -14,7 +14,7 @@ shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData
     stable var titular = data.titular;
     stable var domicilio = data.domicilio;
     stable var telefono = data.telefono;
-    stable var eMail = data.eMail;
+    stable var email = data.email;
     stable var matricula = data.matricula;
 
     stable var petArray : [Principal] = [];
@@ -62,7 +62,7 @@ shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData
             "Nombre veterinaria: " # nombre,
             "Domicilio: " # domicilio,
             "Telefono: " # telefono,
-            "email: " # eMail,
+            "email: " # email,
             "Principal ID: " # Principal.toText(owner),
             "Titular: " # titular,
         ];
@@ -72,7 +72,7 @@ shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData
     public query func getTitular() : async Text { titular };
     public query func getNombre() : async Text { nombre };
     public query func getDomicilio() : async Text { domicilio };
-    public query func getMail() : async Text { eMail };
+    public query func getMail() : async Text { email };
     public query func getTelefono() : async Text { telefono };
 
     public shared ({ caller }) func getInfoFromPet(petPrincipal : Text) : async [Text] {

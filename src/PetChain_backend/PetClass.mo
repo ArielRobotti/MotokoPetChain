@@ -17,10 +17,10 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
     stable var nacimiento = data.nacimiento;
     stable var ownerName = data.ownerName;
     stable var ownerPhone = data.ownerPhone;
-    stable var eMail : Text = data.eMail;
+    stable var email : Text = data.email;
 
     stable var eventosDiarios : [Evento] = [];
-    stable var eventosClinicos : [Clinical_record] = []; //
+    stable var eventosClinicos : [Clinical_record] = []; 
 
     stable var adminArray = [caller]; //El unico admin hasta aquí es el Vet desde el que se creó  este Pet
 
@@ -61,7 +61,7 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
                 "Nombre: " # name,
                 "Cliente: " # ownerName,
                 "Phone: " # ownerPhone,
-                "Email: " # eMail,
+                "Email: " # email,
             ];
         };
         return ["Acceso no permitido"];
@@ -85,7 +85,7 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
         return "Acceso no permitido";
     };
     public shared query ({ caller }) func getEmail() : async Text {
-        if (isAdmin(caller) or caller == owner) { return eMail };
+        if (isAdmin(caller) or caller == owner) { return email };
         return "Acceso no permitido";
     };
 
@@ -128,7 +128,7 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
     };
     public shared ({ caller }) func setEmail(_newEmail : Text) : async Bool {
         if (caller == owner and Text.contains(_newEmail, #char '@')) {
-            eMail := _newEmail;
+            email := _newEmail;
             return true;
         };
         return false;

@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     raza: formData.get("raza"),
                     ownerName: formData.get("nombreClient"),
                     ownerPhone: formData.get("telefono"),
-                    eMail : formData.get("email"),
+                    email : formData.get("email"),
                   };
       const principalPet = await PetChain_backend.newPet(args);
       console.log(principalPet);
@@ -56,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const args = {nombre: formData.get("nombreVeterinaria"),
                     domicilio: formData.get("direccion"),
                     telefono: formData.get("telefono"),
-                    eMail: formData.get("eMail"),
+                    email: formData.get("email"),
                     titular:  formData.get("titular"),
                     matricula: formData.get("matricula"),
                   }        
@@ -103,5 +103,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     return true;
   };
-
 });
