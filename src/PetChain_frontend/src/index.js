@@ -23,17 +23,30 @@ document.addEventListener("DOMContentLoaded", function () {
     if (event.target.id === "crearMascota") {
       cargarContenidoDinamico("crear-mascota.html");
       vista = event.target.id;
-    } else if (event.target.id === "crearVeterinaria") {
+    } 
+    else if (event.target.id === "crearVeterinaria") {
       cargarContenidoDinamico("crear-veterinaria.html");
       vista = event.target.id;
-    } else if (event.target.id === "newPet") {
+    } 
+    else if (event.target.id === "newPet") { //enviar los datos del form al contructor de Pet
       event.preventDefault();
       console.log("PetChain_backend.newPet()");
-    } else if (event.target.id === "newVet") {
+      formData = new FormData(document.getElementById("pet-form"));
+      const args = {name: formData.get("nombreMascota"),
+                    nacimiento: formData.get("fechaNacimiento"),
+                    especie: formData.get("especie"),
+                    raza: formData.get("raza"),
+                    ownerName: formData.get("nombreClient"),
+                    ownerPhone: formData.get("telefono"),
+                    eMail : formData.get("email"),
+                  };
+      const principalPet = await PetChain_backend.newPet(args)
+
+    } 
+    else if (event.target.id === "newVet") { //enviar los datos del form al contructor de Vet
       event.preventDefault();
       const vetForm = document.getElementById("vet-form");
       const formData = new FormData(vetForm);
-      console.log(formData.get("nombreVeterinaria"));
       const principalVet = await PetChain_backend.newVet(formData.get("nombreVeterinaria"),
                                                     formData.get("direccion"),
                                                     formData.get("telefono"),

@@ -25,6 +25,23 @@ module{
         descripcion: Text;
     };
     
+    public type initVetData ={
+        nombre: Text;
+        domicilio: Text;
+        telefono: Text;
+        eMail: Text;
+        titular:  Text;
+        matricula: Text;
+    };
+    public type initPetData ={
+        name: Text;
+        nacimiento: Text;
+        especie: Text;
+        raza: Text;
+        ownerName: Text;
+        ownerPhone: Text;
+        eMail : Text;
+    };
     /*public func regToBlob(r : Clinical_record): async [Blob]{
         var tempBuffer = Buffer.Buffer<Blob>(1);
         tempBuffer.add(Blob.fromInt(r.date));

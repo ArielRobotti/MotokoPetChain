@@ -1,4 +1,3 @@
-
 import Principal "mo:base/Principal";
 import Buffer "mo:base/Buffer";
 import Cycles "mo:base/ExperimentalCycles";
@@ -8,24 +7,17 @@ import Time "mo:base/Time";
 import Array "mo:base/Array";
 import PetClass "PetClass";
 
-shared ({ caller }) actor class Vet(_owner : Principal,
-                                    _nombre : Text,
-                                    _domicilio : Text,
-                                    _telefono: Text,
-                                    _eMail: Text,
-                                    _titular : Text,
-                                    _matricula: Text,
-                                    ) {
+shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData) {
     stable let rootPrincipal = caller; //corresponde al Principal del main
-    stable let owner = _owner;
-    stable var nombre = _nombre;
-    stable var titular = _titular;
-    stable var domicilio = _domicilio;
-    stable var telefono = _telefono;
-    stable var eMail = _eMail;
-    stable var matricula = _matricula;
-    
-    stable var petList = List.nil<Principal>(); //Cambiar por un Array
+    stable let owner = _owner; //este Principal es el caller que envía el form desde el main
+    stable var nombre = data.nombre;
+    stable var titular = data.titular;
+    stable var domicilio = data.domicilio;
+    stable var telefono = data.telefono;
+    stable var eMail = data.eMail;
+    stable var matricula = data.matricula;
+
+    stable var petArray : [Principal] = [];
 
     //---- declaraciones de tipos -----
     type Turno = Types.Turno;
@@ -33,15 +25,6 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     type Evento = Types.Evento;
 
     //stable var calendarioTurnos: [[Turno]] = [];
-
-    public shared ({ caller }) func newPet(_name : Text) : async Principal {
-        //FEE 27_692_398_460
-        Cycles.add(27_692_398_460);
-        let miPet = await PetClass.Pet(rootPrincipal, caller, _name, "", "", "", "", 0, ""); // se instancia un actor de tipo Pet
-        let principal = Principal.fromActor(miPet); // se guarda el Principal del canister creado
-        petList := List.push(principal, petList); // en la lista de Pets
-        return principal; // y se retorna el principal para poder acceder luego al canister
-    };
 
     //----------------------------- setters ----------------------------------------
     public shared ({ caller }) func setTitular(_titular : Text) : async Bool {
@@ -74,15 +57,17 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     };
 
     //----------------------- getters ------------------------------------------------
-    public shared query func getInfo(): async [Text]{
-        ["Nombre veterinaria: " # nombre, 
-        "Domicilio: " # domicilio,
-        "Telefono: " # telefono,
-        "email: " # eMail,
-        "Principal ID: " # Principal.toText(owner),
-        "Titular: " # titular];
+    public shared query func getInfo() : async [Text] {
+        [
+            "Nombre veterinaria: " # nombre,
+            "Domicilio: " # domicilio,
+            "Telefono: " # telefono,
+            "email: " # eMail,
+            "Principal ID: " # Principal.toText(owner),
+            "Titular: " # titular,
+        ];
     };
-    public query func getMiPets() : async [Principal] { List.toArray<Principal>(petList)};
+    public query func getMiPets() : async [Principal] { petArray };
     public query func getOwner() : async Text { Principal.toText(owner) };
     public query func getTitular() : async Text { titular };
     public query func getNombre() : async Text { nombre };
@@ -90,47 +75,42 @@ shared ({ caller }) actor class Vet(_owner : Principal,
     public query func getMail() : async Text { eMail };
     public query func getTelefono() : async Text { telefono };
 
-   
     public shared ({ caller }) func getInfoFromPet(petPrincipal : Text) : async [Text] {
         if (caller != owner) { return [] };
-        let remotePet = actor (petPrincipal): actor {getInfo: shared () -> async [Text]}; // referencia a canister Pet
+        let remotePet = actor (petPrincipal) : actor { getInfo : shared () -> async [Text]; }; // referencia a canister Pet
         await remotePet.getInfo();
     };
 
-    // --------------------- Para calendario ----------------------------------------------------------
+    // --------------------- Para el calendario ----------------------------------------------------------
     /* public query func dayFromTimeStamp(t : Int) : async Text {
         let daysOfWeek = ["lunes", "martes", "miercoles", "jueves", "viernes", "", ""];
         let index = (t / 86400 + 3) % 7;
         daysOfWeek[Int.abs(index)];
     };
     */
-    public shared ({caller}) func writeRegOnPet2(pet: Text,
-                                                sintomas: Text,
-                                                diagnostico: Text,
-                                                tratamiento: Text): async Bool {
-        if (caller != owner) { return false };
-        let date = Time.now();
-        let remotePet = actor(pet): actor {writeClinicReg2: shared (Int, Text, Text, Text) -> async Bool};
-        let success = await remotePet.writeClinicReg2(date, sintomas, diagnostico, tratamiento);
-        success;
-    };
 
-    public shared ({caller}) func writeRegOnPet(pet: Text, rec: Clinical_record): async Bool {
+    public shared ({ caller }) func writeRegOnPet(pet : Text, rec : Clinical_record) : async Bool {
         if (caller != owner) { return false };
-        let remotePet = actor(pet): actor {writeClinicReg: shared (Clinical_record) -> async Bool};
+        let remotePet = actor (pet) : actor {
+            writeClinicReg : shared (Clinical_record) -> async Bool;
+        };
         let success = await remotePet.writeClinicReg(rec);
         success;
     };
 
-    public shared ({caller}) func readClinicRegFromPet(pet: Text):async [Clinical_record]{
-        if(caller != owner) {return []}; 
-        let remotePet = actor(pet): actor {readClinicReg: shared () -> async [Clinical_record]};
+    public shared ({ caller }) func getClinicHistory(pet : Text) : async [Clinical_record] {
+        if (caller != owner) { return [] };
+        let remotePet = actor (pet) : actor {
+            readClinicReg : shared () -> async [Clinical_record];
+        };
         await remotePet.readClinicReg();
     };
 
-    public shared ({caller}) func readEventosDiariosOnPet(pet: Text): async [Evento]{
-        if(caller != owner) {return []};
-        let remotePet = actor(pet): actor {readEventosDiarios: shared () -> async [Evento]};
+    public shared ({ caller }) func readEventosDiariosOnPet(pet : Text) : async [Evento] {
+        if (caller != owner) { return [] };
+        let remotePet = actor (pet) : actor {
+            readEventosDiarios : shared () -> async [Evento];
+        };
         await remotePet.readEventosDiarios();
     };
 };

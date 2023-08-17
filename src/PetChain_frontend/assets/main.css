@@ -19,30 +19,31 @@ nav {
   color: #fff;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100%;
-  padding: 10px;
   z-index: 1000;
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
 }
 
 nav a {
+  width: 15%;
+  text-align:center;
   text-decoration: none;
   font-size: 14px;
   color: #fff;
   padding: 10px;
-  transition: background-color 0.3s;
+  transition: background-color 0.7s;
+  transition: font-size 0.3s;
 }
 
 nav a:hover {
+  border-radius: 30px;
+  font-size: 16px;
   background-color: #122b44;
 }
-
 .content {
-  margin-top: 60px;
-  margin-bottom: 60px
-    /* Espacio para la barra de navegación */
+  margin-top: 40px;
+  margin-bottom: 40px
 }
 
 .button-container {
@@ -75,23 +76,16 @@ nav a:hover {
   transform: scale(1.04);
 }
 
-#contenido-dinamico {
-  margin-top: 80px;
-  position: relative;
-}
-
 #contenido-dinamico > div,
 #contenido-dinamico > form {
   width: 100%;
   top: 50px;
   height: 100%;
   opacity: 0;
-  transition: opacity 1s ease-in-out;
+  transition: opacity 0.7s ease-in-out;
 }
 
 .content {
-  margin-top: 30;
-  margin-bottom: 60px;
   display: flex;
   justify-content: center; /* Centrar horizontalmente */
   align-items: center; /* Centrar verticalmente */
@@ -188,8 +182,7 @@ footer {
 }
 
 footer p {
-  margin: 5px;
-  /* padding: 5px 10px; */
+  width: 20%;
 }
 
 @media screen and (min-width: 768px) {
@@ -200,7 +193,7 @@ footer p {
   .button-container {
     flex-direction: row;
     justify-content: center;
-    margin: 100px auto;
+    margin: 30px auto;
   }
 
   .pet-form {
