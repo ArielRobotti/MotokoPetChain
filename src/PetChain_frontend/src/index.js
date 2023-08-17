@@ -20,6 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 
   contenidoDinamico.addEventListener("click", async function (event) {
+    console.log(event.target.id);
     if (event.target.id === "crearMascota") {
       cargarContenidoDinamico("crear-mascota.html");
       vista = event.target.id;
@@ -29,9 +30,12 @@ document.addEventListener("DOMContentLoaded", function () {
       vista = event.target.id;
     } 
     else if (event.target.id === "newPet") { //enviar los datos del form al contructor de Pet
-      event.preventDefault();
-      console.log("PetChain_backend.newPet()");
-      formData = new FormData(document.getElementById("pet-form"));
+      event.preventDefault();    
+      const petForm = document.getElementById("pet-form");
+      if(!formOK(petForm)){ return };
+      console.log("sigamos");
+      
+      const formData = new FormData(petForm);
       const args = {name: formData.get("nombreMascota"),
                     nacimiento: formData.get("fechaNacimiento"),
                     especie: formData.get("especie"),
@@ -40,8 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     ownerPhone: formData.get("telefono"),
                     eMail : formData.get("email"),
                   };
-      const principalPet = await PetChain_backend.newPet(args)
-
+      const principalPet = await PetChain_backend.newPet(args);
+      console.log(principalPet);
     } 
     else if (event.target.id === "newVet") { //enviar los datos del form al contructor de Vet
       event.preventDefault();
@@ -55,6 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     formData.get("matricula"),
                                                     );
       console.log(principalVet);
+      
     };
   });
 
@@ -73,7 +78,24 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     xhr.send();
-  }
+  };
+
+  function formOK(form){
+    console.log("verificando form...");
+    const campos = form.querySelectorAll("input[required]");
+    for(const campo of campos) { 
+      if (!campo.value) {
+        console.log("Campo incompleto");
+        campo.classList.add("campo-incompleto");
+        return false
+      }else {
+        campo.classList.remove("campo-incompleto");
+      };
+    }
+    console.log("campos completos");
+    return true;
+  };
+
 });
 
 

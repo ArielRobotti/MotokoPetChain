@@ -24,7 +24,7 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
 
     stable var adminArray = [caller]; //El unico admin hasta aquí es el Vet desde el que se creó  este Pet
 
-    //---------- declaraciones de typos -------
+    //---------- declaraciones de tipos -------
     type Clinical_record = Types.Clinical_record;
     type Evento = Types.Evento;
     type initPetData = Types.initPetData;

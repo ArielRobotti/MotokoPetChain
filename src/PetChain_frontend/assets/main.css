@@ -15,6 +15,7 @@ body {
 }
 
 nav {
+  min-height: 40px;
   background-color: #1b75db;
   color: #fff;
   position: fixed;
@@ -32,14 +33,14 @@ nav a {
   font-size: 14px;
   color: #fff;
   padding: 10px;
-  transition: background-color 0.7s;
-  transition: font-size 0.3s;
+  transition: background-color 1s;
+  transition: font-size 0.1s;
 }
 
 nav a:hover {
   border-radius: 30px;
   font-size: 16px;
-  background-color: #122b44;
+  background-color: #1d4da7;
 }
 .content {
   margin-top: 40px;
@@ -111,11 +112,19 @@ form {
   /* Ajuste del ancho */
   max-width: 900px;
   /* Máximo ancho */
-  margin: 0 auto;
+  margin: 2% auto;
 }
 
 .form-section {
   margin-bottom: 20px;
+}
+
+/* Estilos para campos incompletos */
+.campo-incompleto {
+  border: 1px solid red; /* Cambiar el borde a rojo */
+  background-color: #ffeeee; /* Cambiar el fondo a un tono rosado claro */
+  color: red; /* Cambiar el color del texto a rojo */
+  /* Otros estilos visuales que desees agregar */
 }
 
 .submit {
