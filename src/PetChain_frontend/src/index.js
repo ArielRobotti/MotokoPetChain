@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();    
       const petForm = document.getElementById("pet-form");
       if(!formOK(petForm)){ return };
-      console.log("sigamos");
       
       const formData = new FormData(petForm);
       const args = {name: formData.get("nombreMascota"),
@@ -50,16 +49,20 @@ document.addEventListener("DOMContentLoaded", function () {
     else if (event.target.id === "newVet") { //enviar los datos del form al contructor de Vet
       event.preventDefault();
       const vetForm = document.getElementById("vet-form");
+      if(!formOK(vetForm)){ return };
+
       const formData = new FormData(vetForm);
-      const principalVet = await PetChain_backend.newVet(formData.get("nombreVeterinaria"),
-                                                    formData.get("direccion"),
-                                                    formData.get("telefono"),
-                                                    formData.get("eMail"),
-                                                    formData.get("titular"),
-                                                    formData.get("matricula"),
-                                                    );
+      //TODO-------------------
+      const args = {nombre: formData.get("nombreVeterinaria"),
+                    domicilio: formData.get("direccion"),
+                    telefono: formData.get("telefono"),
+                    eMail: formData.get("eMail"),
+                    titular:  formData.get("titular"),
+                    matricula: formData.get("matricula"),
+                  }        
+      const principalVet = await PetChain_backend.newVet(args);
       console.log(principalVet);
-      
+      //-----------------------------------
     };
   });
 
@@ -81,22 +84,24 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   function formOK(form){
-    console.log("verificando form...");
     const campos = form.querySelectorAll("input[required]");
     for(const campo of campos) { 
       if (!campo.value) {
-        console.log("Campo incompleto");
         campo.classList.add("campo-incompleto");
         return false
       }else {
         campo.classList.remove("campo-incompleto");
       };
     }
-    console.log("campos completos");
+    // Verificacion de formato de email
+    const email = form.querySelector("#email"); 
+    if(email.value != "" && !/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email.value)){
+      email.classList.add("campo-incompleto");
+      return false;
+    }else {
+      email.classList.remove("campo-incompleto");
+    }
     return true;
   };
 
 });
-
-
-
