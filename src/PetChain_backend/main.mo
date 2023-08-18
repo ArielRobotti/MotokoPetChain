@@ -1,6 +1,8 @@
 /*
-PetChain_backend canister created on network ic with canister  id: yucnr-hyaaa-aaaak-qcjwa-cai, bkyz2-fmaaa-aaaaa-qaaaq-cai
-PetChain_frontend canister created on network ic with canister id: ytdlf-kaaaa-aaaak-qcjwq-cai, bd3sg-teaaa-aaaaa-qaaba-cai
+PetChain_backend canister created on network ic with canister  id: yucnr-hyaaa-aaaak-qcjwa-cai, 
+    Local: bkyz2-fmaaa-aaaaa-qaaaq-cai
+PetChain_frontend canister created on network ic with canister id: ytdlf-kaaaa-aaaak-qcjwq-cai, 
+    Local: bd3sg-teaaa-aaaaa-qaaba-cai
 
 Mainet front canister: https://ytdlf-kaaaa-aaaak-qcjwq-cai.icp0.io/
 
@@ -29,8 +31,8 @@ actor root{
 
   //--------------------- Funcion para crear un canister de tipo Vet ------------------------
   public shared ({ caller }) func newVet(initData: initVetData) : async Text { 
-    Cycles.add(10_692_307_692);                    //FEE para crear un canister 13 846 199 230
-    let miVet = await VetClass.Vet(caller, initData); // se instancia un actor de tipo Vet
+    Cycles.add(13_846_199_230 + 5_000_000_000);        //FEE para crear un canister 13 846 199 230
+    let miVet = await VetClass.Vet(caller, initData); // se crea un actor de tipo Vet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miVet);       // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
     tempBuffer.add(principal);
@@ -40,8 +42,8 @@ actor root{
 
   //--------------- Funcion para crear un canister de tipo Pet ------------------------------
   public shared ({ caller }) func newPet(initData: initPetData) : async Text { 
-    Cycles.add(10_692_307_692);                    //FEE para crear un canister 13 846 199 230
-    let miPet = await PetClass.Pet(caller, initData); // se instancia un actor de tipo Pet
+    Cycles.add(13_846_199_230 + 5_000_000_000);        //FEE para crear un canister 13 846 199 230
+    let miPet = await PetClass.Pet(caller, initData); // se crea un actor de tipo Pet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
     tempBuffer.add(principal);
@@ -64,21 +66,21 @@ actor root{
   public shared func getVets(): async [vetInfo]{
     var tempBuffer = Buffer.Buffer<vetInfo>(0);
     for(vet in vetArray.vals()){
-      let remoteActor =  actor (vet) : actor { getInfo : shared () -> async vetInfo; };
-      let info = await remoteActor.vetInfo();
+      let remoteActor =  actor (Principal.toText(vet)) : actor { getInfo : shared () -> async vetInfo; };
+      let info = await remoteActor.getInfo();
       tempBuffer.add(info);
     };
-    return Buffer.toList(tempBuffer);
+    return Buffer.toArray(tempBuffer);
   };
 
   public shared func getPets(): async [petInfo]{
-    var tempBuffer = Buffer.Buffer<vetInfo>(0);
+    var tempBuffer = Buffer.Buffer<petInfo>(0);
     for(pet in petArray.vals()){
-      let remoteActor =  actor (pet) : actor { getInfo : shared () -> async petInfo; };
-      let info = await remoteActor.petInfo();
+      let remoteActor =  actor (Principal.toText(pet)) : actor { getInfo : shared () -> async petInfo; };
+      let info = await remoteActor.getInfo();
       tempBuffer.add(info);
     };
-    return Buffer.toList(tempBuffer);
+    return Buffer.toArray<petInfo>(tempBuffer);
   };
 
 };

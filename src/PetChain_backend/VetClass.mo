@@ -5,7 +5,6 @@ import List "mo:base/List";
 import Types "Types";
 import Time "mo:base/Time";
 import Array "mo:base/Array";
-import PetClass "PetClass";
 
 shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData) {
     stable let rootPrincipal = caller; //corresponde al Principal del main
