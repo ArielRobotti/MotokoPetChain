@@ -18,14 +18,22 @@ import Cycles "mo:base/ExperimentalCycles";
 import HashMap "mo:base/HashMap";
 import Types "Types";
 
-actor root{
-  stable var vetArray : [Principal] = [];
-  stable var petArray : [Principal] = [];
+shared ({caller}) actor class Root(){
+  stable var vetArray : [Principal] = [];   //array de canister Vet creados
+  stable var petArray : [Principal] = [];   //array de canister Pet creados
+  var controller = caller;
+
+  public shared ({caller}) func resetVetArray(){
+    if(caller == controller) { vetArray := []}
+  };
+  public shared ({caller}) func resetPetArray(){
+    if(caller == controller) { petArray := []}
+  };
 
   //------------------------------- declaraciones de tipos ----------------------------------
-  type initVetData = Types.initVetData;
-  type initPetData = Types.initPetData;
-  type petInfo = Types.petInfo;
+  type initVetData = Types.initVetData;     //Type con los campos para crear un canister Vet
+  type initPetData = Types.initPetData;     //Type con los campos para crear un canister Vet
+  type petInfo = Types.petInfo;             
   type vetInfo = Types.vetInfo;
 
 
@@ -45,7 +53,7 @@ actor root{
     Cycles.add(13_846_199_230 + 5_000_000_000);        //FEE para crear un canister 13 846 199 230
     let miPet = await PetClass.Pet(caller, initData); // se crea un actor de tipo Pet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado
-    var tempBuffer = Buffer.fromArray<Principal>(vetArray);
+    var tempBuffer = Buffer.fromArray<Principal>(petArray);
     tempBuffer.add(principal);
     petArray := Buffer.toArray(tempBuffer);           //en el array de Pets
     return Principal.toText(principal);               // y se retorna el principal para poder acceder luego al canister
