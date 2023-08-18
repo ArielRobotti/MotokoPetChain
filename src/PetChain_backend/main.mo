@@ -38,18 +38,20 @@ shared ({caller}) actor class Root(){
 
 
   //--------------------- Funcion para crear un canister de tipo Vet ------------------------
-  public shared ({ caller }) func newVet(initData: initVetData) : async Text { 
-    Cycles.add(13_846_199_230 + 5_000_000_000);        //FEE para crear un canister 13 846 199 230
-    let miVet = await VetClass.Vet(caller, initData); // se crea un actor de tipo Vet y se le envian 5_000_000_000 cycles
-    let principal = Principal.fromActor(miVet);       // se guarda el Principal del canister creado
+  public shared ({ caller }) func newVet(initData: initVetData) : async Text {
+    if(Principal.toText(caller) == "2vxsx-fae"){return "Identifíquese"};
+    Cycles.add(13_846_199_230 + 5_000_000_000);         //FEE para crear un canister 13 846 199 230
+    let miVet = await VetClass.Vet(caller, initData);   // se crea un actor de tipo Vet y se le envian 5_000_000_000 cycles
+    let principal = Principal.fromActor(miVet);         // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
     tempBuffer.add(principal);
-    vetArray := Buffer.toArray(tempBuffer);           //en el array de Vets
-    return Principal.toText(principal);               // y se retorna el principal para poder acceder luego al canister
+    vetArray := Buffer.toArray(tempBuffer);             //en el array de Vets
+    return Principal.toText(principal);                 // y se retorna el principal para poder acceder luego al canister
   };
 
   //--------------- Funcion para crear un canister de tipo Pet ------------------------------
-  public shared ({ caller }) func newPet(initData: initPetData) : async Text { 
+  public shared ({ caller }) func newPet(initData: initPetData) : async Text {
+    if(Principal.toText(caller) == "2vxsx-fae"){return "Identifíquese"};
     Cycles.add(13_846_199_230 + 5_000_000_000);        //FEE para crear un canister 13 846 199 230
     let miPet = await PetClass.Pet(caller, initData); // se crea un actor de tipo Pet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado
