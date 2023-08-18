@@ -9,7 +9,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   nav.addEventListener("click", function(event){
     event.preventDefault();
-    console.log(event.target.id);
     if(vista === event.target.id){return};
     vista = event.target.id;
     if(event.target.id === "inicio"){cargarContenidoDinamico("crear-perfil.html")}
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", function () {
   })
 
   contenidoDinamico.addEventListener("click", async function (event) {
-    console.log(event.target.id);
     if (event.target.id === "crearMascota") {
       cargarContenidoDinamico("crear-mascota.html");
       vista = event.target.id;
