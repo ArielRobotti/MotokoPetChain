@@ -28,6 +28,7 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
     type Clinical_record = Types.Clinical_record;
     type Evento = Types.Evento;
     type initPetData = Types.initPetData;
+    type petInfo = Types.petInfo;
     //-------------------------------------------
     
     func isAdmin(p : Principal) : Bool {
@@ -55,16 +56,13 @@ shared ({ caller }) actor class Pet(_owner : Principal, data : Types.initPetData
     };
 
     // -------------- Getters. Acceso permitido al owner y admins de este Pet ----------------------
-    public shared query ({ caller }) func getInfo() : async [Text] {
-        if (isAdmin(caller) or caller == owner) {
-            return [
-                "Nombre: " # name,
-                "Cliente: " # ownerName,
-                "Phone: " # ownerPhone,
-                "Email: " # email,
-            ];
+    public shared query func getInfo() : async petInfo {
+        return {
+            name = name;
+            raza = raza;
+            ownerName = ownerName;
+            ownerPhone = ownerPhone;
         };
-        return ["Acceso no permitido"];
     };
     public shared query ({ caller }) func getOwner() : async Text {
         if (isAdmin(caller) or caller == owner) {

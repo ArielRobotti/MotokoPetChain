@@ -20,11 +20,14 @@ actor root{
   stable var vetArray : [Principal] = [];
   stable var petArray : [Principal] = [];
 
-  //------------- declaraciones de tipos --------------------------------
+  //------------------------------- declaraciones de tipos ----------------------------------
   type initVetData = Types.initVetData;
   type initPetData = Types.initPetData;
+  type petInfo = Types.petInfo;
+  type vetInfo = Types.vetInfo;
 
-  //------------- Funcion para crear un canister de tipo Vet ------------
+
+  //--------------------- Funcion para crear un canister de tipo Vet ------------------------
   public shared ({ caller }) func newVet(initData: initVetData) : async Text { 
     Cycles.add(10_692_307_692);                    //FEE para crear un canister 13 846 199 230
     let miVet = await VetClass.Vet(caller, initData); // se instancia un actor de tipo Vet
@@ -35,7 +38,7 @@ actor root{
     return Principal.toText(principal);               // y se retorna el principal para poder acceder luego al canister
   };
 
-  //------------- Funcion para crear un canister de tipo Pet ------------------------------
+  //--------------- Funcion para crear un canister de tipo Pet ------------------------------
   public shared ({ caller }) func newPet(initData: initPetData) : async Text { 
     Cycles.add(10_692_307_692);                    //FEE para crear un canister 13 846 199 230
     let miPet = await PetClass.Pet(caller, initData); // se instancia un actor de tipo Pet
@@ -57,5 +60,25 @@ actor root{
     for(pet in petArray.vals()) { if (pet == _p) {return true}};
     return false;
   };
-  
+  //-----------------------------------------------------------------------------------------
+  public shared func getVets(): async [vetInfo]{
+    var tempBuffer = Buffer.Buffer<vetInfo>(0);
+    for(vet in vetArray.vals()){
+      let remoteActor =  actor (vet) : actor { getInfo : shared () -> async vetInfo; };
+      let info = await remoteActor.vetInfo();
+      tempBuffer.add(info);
+    };
+    return Buffer.toList(tempBuffer);
+  };
+
+  public shared func getPets(): async [petInfo]{
+    var tempBuffer = Buffer.Buffer<vetInfo>(0);
+    for(pet in petArray.vals()){
+      let remoteActor =  actor (pet) : actor { getInfo : shared () -> async petInfo; };
+      let info = await remoteActor.petInfo();
+      tempBuffer.add(info);
+    };
+    return Buffer.toList(tempBuffer);
+  };
+
 };

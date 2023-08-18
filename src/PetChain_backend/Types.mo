@@ -33,6 +33,12 @@ module{
         titular:  Text;
         matricula: Text;
     };
+    public type vetInfo ={
+        nombre: Text;
+        domicilio: Text;
+        telefono: Text;
+        email: Text;
+    };
     public type initPetData ={
         name: Text;
         nacimiento: Text;
@@ -42,6 +48,13 @@ module{
         ownerPhone: Text;
         email : Text;
     };
+    public type petInfo ={
+        name: Text;
+        raza: Text;
+        ownerName: Text;
+        ownerPhone: Text;
+    };
+
     /*public func regToBlob(r : Clinical_record): async [Blob]{
         var tempBuffer = Buffer.Buffer<Blob>(1);
         tempBuffer.add(Blob.fromInt(r.date));

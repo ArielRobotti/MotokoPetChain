@@ -23,6 +23,7 @@ shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData
     type Turno = Types.Turno;
     type Clinical_record = Types.Clinical_record;
     type Evento = Types.Evento;
+    type vetInfo = Types.vetInfo;
 
     //stable var calendarioTurnos: [[Turno]] = [];
 
@@ -57,15 +58,13 @@ shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData
     };
 
     //----------------------- getters ------------------------------------------------
-    public shared query func getInfo() : async [Text] {
-        [
-            "Nombre veterinaria: " # nombre,
-            "Domicilio: " # domicilio,
-            "Telefono: " # telefono,
-            "email: " # email,
-            "Principal ID: " # Principal.toText(owner),
-            "Titular: " # titular,
-        ];
+    public shared query func getInfo() : async vetInfo {
+        return {
+            nombre = nombre;
+            domicilio = domicilio;
+            telefono = telefono;
+            email = email;
+        };
     };
     public query func getMiPets() : async [Principal] { petArray };
     public query func getOwner() : async Text { Principal.toText(owner) };
