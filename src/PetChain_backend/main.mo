@@ -6,7 +6,7 @@ PetChain_frontend canister created on network ic with canister id: ytdlf-kaaaa-a
 
 Mainet front canister: https://ytdlf-kaaaa-aaaak-qcjwq-cai.icp0.io/
 
-Mainet back  canister: https://yucnr-hyaaa-aaaak-qcjwa-cai.icp0.io/
+Mainet back  canister: https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=yucnr-hyaaa-aaaak-qcjwa-cai
 
 */
 

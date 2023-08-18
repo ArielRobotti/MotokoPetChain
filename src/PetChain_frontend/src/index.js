@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
   cargarContenidoDinamico("crear-perfil.html")
   var vista = "inicio";
 
-  nav.addEventListener("click", function(event){
+  nav.addEventListener("mousedown", function(event){
     event.preventDefault();
     if(vista === event.target.id){return};
     vista = event.target.id;
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     else if(event.target.id === "ask"){};    
   })
 
-  contenidoDinamico.addEventListener("click", async function (event) {
+  contenidoDinamico.addEventListener("mousedown", async function (event) {
     if (event.target.id === "crearMascota") {
       cargarContenidoDinamico("crear-mascota.html");
       vista = event.target.id;
