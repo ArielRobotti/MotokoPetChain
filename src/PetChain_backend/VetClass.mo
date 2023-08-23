@@ -18,7 +18,7 @@ shared ({ caller }) actor class Vet(_owner : Principal, data : Types.initVetData
 
     stable var petArray : [Principal] = [];
 
-    //---- declaraciones de tipos -----
+    //------------ declaraciones de tipos -------------
     type Turno = Types.Turno;
     type Clinical_record = Types.Clinical_record;
     type Evento = Types.Evento;

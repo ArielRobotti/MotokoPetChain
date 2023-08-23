@@ -1,13 +1,9 @@
-.image-title {
-  display: block;
-  text-align: center;
-  font-size: 20px;
-  color: #111;
-  margin-bottom: 5px;
-}
 
 body {
-  background-color: #11222b;
+  background-image: url('BGPets.png');
+  text-shadow: 4px 4px 5px black;
+  background-repeat: repeat;
+  background-color: #F5F5F5; /* #11222b; */
   font-family: Arial, sans-serif;
   background-attachment: fixed;
   margin: 0;
@@ -16,7 +12,8 @@ body {
 
 nav {
   min-height: 40px;
-  background-color: #436183;
+  background-image: linear-gradient(to top, #b88fcfee, #7b0692ee);
+  /*background-color:  #6A1B9A;  /* #436183; */
   color: #fff;
   position: fixed;
   top: 0;
@@ -27,59 +24,68 @@ nav {
 }
 
 nav a {
-  width: 15%;
+  width: 18%;
   text-align:center;
   text-decoration: none;
   font-size: 14px;
   color: #fff;
   padding: 10px;
-  transition: background-color 1s;
-  transition: font-size 0.1s;
+  transition: background-color 0.9s;
+  transition: font-size 0.2s;
 }
 
 nav a:hover {
   border-radius: 30px;
-  font-size: 16px;
-  background-color: #0e2550;
+  font-size: 15px;
+  background-color:  #1c003b99; /* #0e2550; */
+  
 }
 .content {
   margin-top: 40px;
   margin-bottom: 40px
 }
 
-.button-container {
+.card-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 50px auto;
 }
 
-.button {
+.card {
   display: inline-block;
   margin: 10px;
   padding: 10px 20px;
-  background-color: #4ca0af;
+  background-color: #a62fc4c9;
   border: none;
   border-radius: 25px;
-  text-decoration: none;
   cursor: pointer;
   transition: transform 0.3s, background-color 0.3s;
 }
 
-.button img {
+.card:hover {
+  background-color: #560bacc9;
+  transform: scale(1.03);
+}
+
+.image-title {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  color: #fafafa;
+  text-shadow: 3px 3px 4px #000;
+  margin-bottom: 5px;
+}
+
+.card img {
   border-radius: 20px;
   max-width: 100%;
   height: auto;
 }
 
-.button:hover {
-  background-color: #4ca0af;
-  transform: scale(1.04);
-}
-
 #contenido-dinamico > div,
 #contenido-dinamico > form {
-  width: 100%;
+  width: 90%;
   top: 50px;
   height: 100%;
   opacity: 0;
@@ -95,17 +101,18 @@ nav a:hover {
 .textBox {
   margin: 20px;
   padding: 40px;
-  background-color: rgba(10, 17, 59, 0.601);
-  color: aliceblue;
-  width: 75%; /* Ancho del 75% de su contenedor */
+  background-color: #4e2749e0;
+  border-radius: 20px 50px;
+  color: #ffffff;
+  text-shadow: 5px 5px 10px #111;
   max-width: 90%; /* Asegurarse de no exceder el ancho del padre */
   box-sizing: border-box;
 }
 
 
 form {
-  background-color: rgba(255, 255, 255, 0.884);
-  border-radius: 10px;
+  background-color: rgba(139, 100, 154, 0.904); /* rgba(255, 255, 255, 0.884);*/
+  border-radius: 30px;
   padding: 20px;
   width: 100%;
   /* Ajuste del ancho */
@@ -115,6 +122,7 @@ form {
 }
 
 .form-section {
+  margin: auto 2%;
   margin-bottom: 20px;
 }
 
@@ -122,29 +130,32 @@ form {
 .campo-incompleto {
   border: 1px solid red; /* Cambiar el borde a rojo */
   background-color: #ffeeee; /* Cambiar el fondo a un tono rosado claro */
-  color: red; /* Cambiar el color del texto a rojo */
-  /* Otros estilos visuales que desees agregar */
+  color: red; 
 }
 
 .submit {
   width: 100%;
-  font-size: large;
-  background-color: #1b75db;
+  font-size: 22px;
+  background-color: #1a0d93;
   color: white;
   padding: 10px;
   border: none;
   border-radius: 30px;
+  border-style: groove;
+  border-color: #07051b;
   cursor: pointer;
-  transition: background-color 0.7s;
+  transition: background-color 0.3s;
   margin-top: 20px;
 }
 
 button:hover {
-  background-color: #155eb1;
+  background-color: #2613d7ca;
+  font-size: 23px;
 }
 
 h2 {
-  text-shadow: #fff;
+  color: #fafafa;
+  text-shadow: 3px 3px 4px #111;
   font-size: 1.2em;
   margin-bottom: 10px;
 }
@@ -161,7 +172,7 @@ label {
 
 input {
   font-size: large;
-  width: 100%;
+  width: 95%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 25px;
@@ -170,16 +181,12 @@ input {
   /* text-align: center; */
 }
 
-button:hover {
-  background-color: #155eb1;
-}
-
 footer {
-  background-color: #436183;
+  background-image: linear-gradient(to top, #7b0692de, #b88fcfde);  
   color: white;
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
-
+  text-shadow: 4px -4px 5px black;
   position: fixed;
   bottom: 0px;
   width: 100%;
@@ -190,15 +197,18 @@ footer {
 }
 
 footer p {
-  width: 20%;
+  width: 30%;
 }
 
 @media screen and (min-width: 768px) {
+  footer p {
+    font-size: 12px;
+  }
   nav ul {
     justify-content: space-between;
   }
 
-  .button-container {
+  .card-container {
     flex-direction: row;
     justify-content: center;
     margin: 30px auto;
@@ -211,7 +221,7 @@ footer p {
 
   .form-section {
     margin-right: 20px;
-    width: 90%;
+    width: 95%;
   }
 }
 

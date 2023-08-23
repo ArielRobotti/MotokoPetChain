@@ -1,15 +1,16 @@
 /*
 PetChain_backend canister created on network ic with canister  id: yucnr-hyaaa-aaaak-qcjwa-cai, 
-    Local: bkyz2-fmaaa-aaaaa-qaaaq-cai
+    Local: bkyz2-fmaaa-aaaaa-qaaaq-cai (Identity Motoko_bootcamp2023)
+    http://127.0.0.1:4943/?canisterId=bw4dl-smaaa-aaaaa-qaacq-cai&id=bd3sg-teaaa-aaaaa-qaaba-cai
 PetChain_frontend canister created on network ic with canister id: ytdlf-kaaaa-aaaak-qcjwq-cai, 
-    Local: bd3sg-teaaa-aaaaa-qaaba-cai
+    Local: bd3sg-teaaa-aaaaa-qaaba-cai (Identity Motoko_bootcamp2023)
+    PetChain_frontend: http://127.0.0.1:4943/?canisterId=br5f7-7uaaa-aaaaa-qaaca-cai
 
 Mainet front canister: https://ytdlf-kaaaa-aaaak-qcjwq-cai.icp0.io/
 
 Mainet back  canister: https://a4gq6-oaaaa-aaaab-qaa4q-cai.raw.icp0.io/?id=yucnr-hyaaa-aaaak-qcjwa-cai
 
 */
-
 import VetClass "VetClass";
 import PetClass "PetClass";
 import Principal "mo:base/Principal";
@@ -39,9 +40,9 @@ shared ({caller}) actor class Root(){
 
   //--------------------- Funcion para crear un canister de tipo Vet ------------------------
   public shared ({ caller }) func newVet(initData: initVetData) : async Text {
-    if(Principal.toText(caller) == "2vxsx-fae"){return "Identifíquese"};
-    Cycles.add(13_846_199_230 + 5_000_000_000);         //FEE para crear un canister 13 846 199 230
-    let miVet = await VetClass.Vet(caller, initData);   // se crea un actor de tipo Vet y se le envian 5_000_000_000 cycles
+    if(Principal.isAnonymous(caller)){return "Identifíquese"};
+    Cycles.add(113_846_199_230);         //FEE para crear un canister 13 846 199 230
+    let miVet = await VetClass.Vet(caller, initData);   // se crea un actor de tipo Vet
     let principal = Principal.fromActor(miVet);         // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
     tempBuffer.add(principal);
@@ -51,8 +52,8 @@ shared ({caller}) actor class Root(){
 
   //--------------- Funcion para crear un canister de tipo Pet ------------------------------
   public shared ({ caller }) func newPet(initData: initPetData) : async Text {
-    if(Principal.toText(caller) == "2vxsx-fae"){return "Identifíquese"};
-    Cycles.add(13_846_199_230 + 5_000_000_000);        //FEE para crear un canister 13 846 199 230
+    if(Principal.isAnonymous(caller)){return "Identifíquese"};
+    Cycles.add(113_846_199_230);        //FEE para crear un canister 13 846 199 230
     let miPet = await PetClass.Pet(caller, initData); // se crea un actor de tipo Pet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(petArray);
