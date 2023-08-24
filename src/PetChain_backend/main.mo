@@ -18,17 +18,18 @@ import Buffer "mo:base/Buffer";
 import Cycles "mo:base/ExperimentalCycles";
 import HashMap "mo:base/HashMap";
 import Types "Types";
+import Internal "mo:⛔";
+import Debug "mo:base/Debug";
 
 shared ({caller}) actor class Root(){
   stable var vetArray : [Principal] = [];   //array de canister Vet creados
   stable var petArray : [Principal] = [];   //array de canister Pet creados
-  var controller = caller;
 
   public shared ({caller}) func resetVetArray(){
-    if(caller == controller) { vetArray := []}
+    if(Principal.isController(caller)) { vetArray := []}
   };
   public shared ({caller}) func resetPetArray(){
-    if(caller == controller) { petArray := []}
+    if(Principal.isController(caller)) { petArray := []}
   };
 
   //------------------------------- declaraciones de tipos ----------------------------------
@@ -41,7 +42,9 @@ shared ({caller}) actor class Root(){
   //--------------------- Funcion para crear un canister de tipo Vet ------------------------
   public shared ({ caller }) func newVet(initData: initVetData) : async Text {
     if(Principal.isAnonymous(caller)){return "Identifíquese"};
-    Cycles.add(113_846_199_230);         //FEE para crear un canister 13 846 199 230
+    Debug.print("cargando..." # Principal.toText(caller));
+    Internal.cyclesAdd(113_846_199_230);
+    //Cycles.add(113_846_199_230);         //FEE para crear un canister 13 846 199 230
     let miVet = await VetClass.Vet(caller, initData);   // se crea un actor de tipo Vet
     let principal = Principal.fromActor(miVet);         // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(vetArray);
