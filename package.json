@@ -17,9 +17,10 @@
     "generate": "dfx generate PetChain_backend"
   },
   "dependencies": {
-    "@dfinity/agent": "^0.18.1",
-    "@dfinity/candid": "^0.18.1",
-    "@dfinity/principal": "^0.18.1"
+    "@dfinity/agent": "^0.19.3",
+    "@dfinity/auth-client": "^0.19.3",
+    "@dfinity/candid": "^0.19.3",
+    "@dfinity/principal": "^0.19.3"
   },
   "devDependencies": {
     "assert": "2.0.0",

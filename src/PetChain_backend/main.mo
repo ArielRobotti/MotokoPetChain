@@ -32,6 +32,8 @@ shared ({caller}) actor class Root(){
     if(Principal.isController(caller)) { petArray := []}
   };
 
+  public shared ({caller}) func whoami(): async Text{Principal.toText(caller)};
+
   //------------------------------- declaraciones de tipos ----------------------------------
   type initVetData = Types.initVetData;     //Type con los campos para crear un canister Vet
   type initPetData = Types.initPetData;     //Type con los campos para crear un canister Vet
@@ -40,10 +42,10 @@ shared ({caller}) actor class Root(){
 
 
   //--------------------- Funcion para crear un canister de tipo Vet ------------------------
-  public shared ({ caller }) func newVet(initData: initVetData) : async Text {
-    if(Principal.isAnonymous(caller)){return "Identifíquese"};
-    Debug.print("cargando..." # Principal.toText(caller));
-    Internal.cyclesAdd(113_846_199_230);
+  public shared ({caller}) func newVet(initData: initVetData) : async Text {
+    
+    if(Principal.isAnonymous(caller)){return "Identifiquesé"};
+    Internal.cyclesAdd(13_846_199_230 + 6_153_891_538);
     //Cycles.add(113_846_199_230);         //FEE para crear un canister 13 846 199 230
     let miVet = await VetClass.Vet(caller, initData);   // se crea un actor de tipo Vet
     let principal = Principal.fromActor(miVet);         // se guarda el Principal del canister creado
@@ -55,7 +57,8 @@ shared ({caller}) actor class Root(){
 
   //--------------- Funcion para crear un canister de tipo Pet ------------------------------
   public shared ({ caller }) func newPet(initData: initPetData) : async Text {
-    if(Principal.isAnonymous(caller)){return "Identifíquese"};
+    
+    if(Principal.isAnonymous(caller)){return "Identifiquesé"};
     Cycles.add(113_846_199_230);        //FEE para crear un canister 13 846 199 230
     let miPet = await PetClass.Pet(caller, initData); // se crea un actor de tipo Pet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado
