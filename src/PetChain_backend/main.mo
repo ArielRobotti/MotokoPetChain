@@ -16,10 +16,10 @@ import PetClass "PetClass";
 import Principal "mo:base/Principal";
 import Buffer "mo:base/Buffer";
 import Cycles "mo:base/ExperimentalCycles";
-import HashMap "mo:base/HashMap";
+// import HashMap "mo:base/HashMap";
 import Types "Types";
 import Internal "mo:⛔";
-import Debug "mo:base/Debug";
+// import Debug "mo:base/Debug";
 
 shared ({caller}) actor class Root(){
   stable var vetArray : [Principal] = [];   //array de canister Vet creados
@@ -45,7 +45,7 @@ shared ({caller}) actor class Root(){
   public shared ({caller}) func newVet(initData: initVetData) : async Text {
     
     if(Principal.isAnonymous(caller)){return "Identifiquesé"};
-    Internal.cyclesAdd(13_846_199_230 + 6_153_891_538);
+    Internal.cyclesAdd<system>(13_846_199_230 + 6_153_891_538);
     //Cycles.add(113_846_199_230);         //FEE para crear un canister 13 846 199 230
     let miVet = await VetClass.Vet(caller, initData);   // se crea un actor de tipo Vet
     let principal = Principal.fromActor(miVet);         // se guarda el Principal del canister creado
@@ -59,7 +59,7 @@ shared ({caller}) actor class Root(){
   public shared ({ caller }) func newPet(initData: initPetData) : async Text {
     
     if(Principal.isAnonymous(caller)){return "Identifiquesé"};
-    Cycles.add(113_846_199_230);        //FEE para crear un canister 13 846 199 230
+    Cycles.add<system>(113_846_199_230);        //FEE para crear un canister 13 846 199 230
     let miPet = await PetClass.Pet(caller, initData); // se crea un actor de tipo Pet y se le envian 5_000_000_000 cycles
     let principal = Principal.fromActor(miPet);       // se guarda el Principal del canister creado
     var tempBuffer = Buffer.fromArray<Principal>(petArray);
